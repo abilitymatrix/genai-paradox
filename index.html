@@ -426,11 +426,12 @@
       max-width: 440px; position: relative; z-index: 1;
     }
     .qr-box {
-      width: 150px; height: 150px; background: rgba(255,255,255,0.15);
-      border-radius: 8px; margin: 0 auto 24px;
+      width: 176px; height: 176px; background: var(--w);
+      border-radius: 10px; margin: 0 auto 24px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 12px; color: var(--pl);
+      padding: 10px;
     }
+    .qr-box img { width: 100%; height: 100%; display: block; }
     .connect-name { font-family: 'Raleway', sans-serif; font-size: 21px; font-weight: 800; color: var(--w); margin-bottom: 10px; }
     .connect-link { font-size: 15px; color: var(--pl); margin-bottom: 5px; }
     .connect-note { font-size: 13px; color: rgba(255,255,255,0.3); font-style: italic; margin-top: 18px; }
@@ -894,11 +895,12 @@
   <h2 class="reveal">Navigate the<br>Paradox.</h2>
   <div class="reveal d1">
     <div class="connect-card">
-      <div class="qr-box">[QR Code]</div>
+      <div class="qr-box">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=312x312&data=https%3A%2F%2Flinkedin.com%2Fin%2Fakostolnai&format=svg&margin=0" alt="Scan to connect on LinkedIn" width="156" height="156">
+      </div>
       <div class="connect-name">Akos Tolnai, CCXP</div>
-      <div class="connect-link">[LinkedIn URL]</div>
-      <div class="connect-link">[Email or website]</div>
-      <div class="connect-note">— Scan to connect, download the framework, or book a 1-on-1 call —</div>
+      <div class="connect-link">linkedin.com/in/akostolnai</div>
+      <div class="connect-note">— Scan to connect on LinkedIn —</div>
     </div>
   </div>
 </section>
