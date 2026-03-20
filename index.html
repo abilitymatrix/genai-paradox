@@ -494,6 +494,52 @@
       .play-num-col { display: flex; align-items: center; gap: 14px; }
     }
 
+    /* ── WORKSHOP CARD ── */
+    .connect-cards {
+      display: flex; gap: clamp(20px, 3vw, 36px);
+      justify-content: center; align-items: stretch; flex-wrap: wrap;
+      position: relative; z-index: 1;
+    }
+    .connect-card { flex: 0 0 auto; }
+    .workshop-card {
+      flex: 0 1 380px;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 14px; padding: clamp(28px, 4vw, 44px) clamp(28px, 4vw, 44px);
+      text-align: left; position: relative; z-index: 1;
+      display: flex; flex-direction: column;
+    }
+    .workshop-eyebrow {
+      font-family: 'Raleway', sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: var(--o); margin-bottom: 14px;
+    }
+    .workshop-title {
+      font-family: 'Raleway', sans-serif; font-weight: 900;
+      font-size: clamp(20px, 2.4vw, 27px); color: var(--w);
+      line-height: 1.2; margin-bottom: 10px;
+    }
+    .workshop-tagline {
+      font-size: clamp(13px, 1.3vw, 15px); color: var(--pl);
+      line-height: 1.65; margin-bottom: 20px;
+    }
+    .workshop-list { list-style: none; margin-bottom: 24px; flex: 1; }
+    .workshop-list li {
+      font-size: 14px; color: rgba(255,255,255,0.7);
+      padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex; gap: 10px; line-height: 1.45;
+    }
+    .workshop-list li:last-child { border-bottom: none; }
+    .workshop-list li::before { content: '→'; color: var(--o); font-weight: 700; flex-shrink: 0; }
+    .workshop-cta {
+      display: inline-block; background: var(--o); color: var(--w);
+      font-family: 'Raleway', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase; text-decoration: none;
+      padding: 12px 22px; border-radius: 6px;
+      transition: background 0.2s; align-self: flex-start;
+    }
+    .workshop-cta:hover { background: #d4521f; }
+    @media (max-width: 700px) { .workshop-card { flex-basis: 100%; } }
+
     /* ── FOOTER ── */
     .footer {
       background: var(--dark); padding: 22px clamp(24px, 5vw, 80px);
@@ -1160,7 +1206,7 @@
 <section class="connect">
   <div class="connect-bg" aria-hidden="true">→</div>
   <h2 class="reveal">Navigate the<br>Paradox.</h2>
-  <div class="reveal d1">
+  <div class="connect-cards reveal d1">
     <div class="connect-card">
       <div class="qr-box">
         <img src="https://api.qrserver.com/v1/create-qr-code/?size=312x312&data=https%3A%2F%2Flinkedin.com%2Fin%2Fakostolnai&format=svg&margin=0" alt="Scan to connect on LinkedIn" width="156" height="156">
@@ -1168,6 +1214,18 @@
       <div class="connect-name">Akos Tolnai, CCXP</div>
       <div class="connect-link"><a href="https://linkedin.com/in/akostolnai" target="_blank" rel="noopener" style="color:var(--pl);text-decoration:underline;text-underline-offset:3px;">linkedin.com/in/akostolnai</a></div>
       <div class="connect-note">Scan to connect on LinkedIn</div>
+    </div>
+    <div class="workshop-card">
+      <div class="workshop-eyebrow">Facilitated Workshop</div>
+      <div class="workshop-title">The Navigator Workshop</div>
+      <div class="workshop-tagline">Bring this framework to your leadership team. Walk out with a scored, prioritised GenAI roadmap your compliance team can actually sign off on.</div>
+      <ul class="workshop-list">
+        <li>Map every active GenAI initiative through the Prioritization Matrix</li>
+        <li>Score each idea against the three risk factors with your own customer data</li>
+        <li>Identify your Quick Wins, your Strategic Bets, and your hard nos</li>
+        <li>Build the internal business case language for legal, compliance, and the board</li>
+      </ul>
+      <a href="https://linkedin.com/in/akostolnai" target="_blank" rel="noopener" class="workshop-cta">Book a session</a>
     </div>
   </div>
 </section>
