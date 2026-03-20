@@ -544,7 +544,10 @@
     .risk-card[open] .risk-card-chevron { transform:rotate(45deg); }
     .risk-card-body { padding:14px 22px 20px calc(54px + 38px); border-top:1px solid rgba(255,255,255,0.1); }
     .risk-case-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--o); margin-bottom:8px; }
-    .risk-card-body p { font-size:14px; color:rgba(255,255,255,0.65); line-height:1.7; margin:0; }
+    .risk-card-body p { font-size:14px; color:rgba(255,255,255,0.65); line-height:1.7; margin:0 0 10px; }
+    .risk-card-body p:last-child { margin-bottom:0; }
+    .risk-source { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:var(--o); text-decoration:none; letter-spacing:0.3px; }
+    .risk-source:hover { text-decoration:underline; text-underline-offset:3px; }
     @media(max-width:600px) { .risk-card-body { padding-left:22px; } }
 
     /* ── TENSION VISUAL (Act 1 Mandate) ── */
@@ -857,6 +860,7 @@
       <div class="risk-card-body">
         <div class="risk-case-label">Air Canada · 2024</div>
         <p>Air Canada's support chatbot told a grieving customer that a bereavement fare discount applied to already-purchased tickets. The policy didn't exist. The customer relied on it. Air Canada argued in court that it wasn't responsible for what its chatbot said. The court disagreed. Air Canada was held fully liable. First ruling of its kind: you own what your bot says.</p>
+        <a href="https://www.cbc.ca/news/canada/british-columbia/air-canada-chatbot-lawsuit-1.7116416" target="_blank" rel="noopener" class="risk-source">↗ Read the CBC report</a>
       </div>
     </details>
     <details class="risk-card">
@@ -871,6 +875,7 @@
       <div class="risk-card-body">
         <div class="risk-case-label">DPD · United Kingdom · 2024</div>
         <p>A customer convinced DPD's branded AI support agent to write a poem criticising the company and to describe itself as useless. Screenshots went viral across social media. The bot said it on DPD's own platform, in DPD's support channel, under DPD's name. No warning. No override. The company had no control over what it said once the conversation went off-script.</p>
+        <a href="https://www.theregister.com/2024/01/23/dpd_chatbot_goes_rogue/" target="_blank" rel="noopener" class="risk-source">↗ Read The Register report</a>
       </div>
     </details>
     <details class="risk-card">
@@ -885,6 +890,7 @@
       <div class="risk-card-body">
         <div class="risk-case-label">New York City MyCity AI · 2024</div>
         <p>New York City launched an official AI assistant for businesses, built on city-provided information. The chatbot told small business owners to take actions that violated local employment law. Not vendor error, not a third-party tool: the City's own official AI, giving legally incorrect guidance to the people it was built to help. The city had to publicly retract the guidance and suspend the service.</p>
+        <a href="https://themarkup.org/artificial-intelligence/2024/03/29/nycs-ai-chatbot-tells-businesses-to-break-the-law" target="_blank" rel="noopener" class="risk-source">↗ Read The Markup report</a>
       </div>
     </details>
   </div>
