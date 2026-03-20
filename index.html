@@ -436,6 +436,64 @@
     .connect-link { font-size: 15px; color: var(--pl); margin-bottom: 5px; }
     .connect-note { font-size: 13px; color: rgba(255,255,255,0.3); font-style: italic; margin-top: 18px; }
 
+    /* ── TACTICAL PLAYS ── */
+    .play-card {
+      border-radius: 14px;
+      padding: clamp(28px, 4vw, 44px);
+      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: clamp(18px, 3vw, 36px);
+      align-items: start;
+    }
+    .play-card:last-child { margin-bottom: 0; }
+    .play-card.p1 { background: #E8F5EE; border: 2px solid var(--green); }
+    .play-card.p2 { background: #FEF9E7; border: 2px solid var(--amber); }
+    .play-card.p3 { background: var(--pxl); border: 2px solid var(--p); }
+    .play-num-col { text-align: center; padding-top: 2px; }
+    .play-num {
+      font-family: 'Raleway', sans-serif; font-weight: 900;
+      font-size: clamp(52px, 6.5vw, 76px); line-height: 1; display: block;
+    }
+    .play-card.p1 .play-num { color: var(--green); }
+    .play-card.p2 .play-num { color: var(--amber); }
+    .play-card.p3 .play-num { color: var(--p); }
+    .play-badge {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      padding: 3px 8px; border-radius: 3px; margin-top: 8px; white-space: nowrap;
+    }
+    .play-card.p1 .play-badge { background: var(--green); color: #fff; }
+    .play-card.p2 .play-badge { background: var(--amber); color: #fff; }
+    .play-card.p3 .play-badge { background: var(--p); color: #fff; }
+    .play-title {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(17px, 2vw, 22px); font-weight: 800; margin-bottom: 4px;
+    }
+    .play-card.p1 .play-title { color: var(--green); }
+    .play-card.p2 .play-title { color: var(--amber); }
+    .play-card.p3 .play-title { color: var(--p); }
+    .play-tagline { font-size: clamp(13px, 1.3vw, 15px); color: var(--dark); font-style: italic; margin-bottom: 12px; }
+    .play-body { font-size: clamp(14px, 1.3vw, 16px); color: var(--muted); line-height: 1.75; }
+    .play-body strong { color: var(--dark); }
+    .play-list { margin-top: 16px; border-top: 1px solid; padding-top: 14px; }
+    .play-card.p1 .play-list { border-top-color: #C5E8D0; }
+    .play-card.p2 .play-list { border-top-color: #F0DFA0; }
+    .play-card.p3 .play-list { border-top-color: var(--pl); }
+    .play-list-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+    .play-card.p1 .play-list-label { color: var(--green); }
+    .play-card.p2 .play-list-label { color: var(--amber); }
+    .play-card.p3 .play-list-label { color: var(--p); }
+    .play-item { font-size: 14px; color: var(--dark); padding: 5px 0; display: flex; gap: 8px; }
+    .play-item::before { content: '→'; font-weight: 700; flex-shrink: 0; }
+    .play-card.p1 .play-item::before { color: var(--green); }
+    .play-card.p2 .play-item::before { color: var(--amber); }
+    .play-card.p3 .play-item::before { color: var(--p); }
+    @media (max-width: 580px) {
+      .play-card { grid-template-columns: 1fr; }
+      .play-num-col { display: flex; align-items: center; gap: 14px; }
+    }
+
     /* ── FOOTER ── */
     .footer {
       background: var(--dark); padding: 22px clamp(24px, 5vw, 80px);
@@ -674,7 +732,7 @@
   <div class="container">
     <span class="section-label reveal">Survey Finding · n=104</span>
     <h3 class="reveal d1">The data pushed back.<br><em>Hard.</em></h3>
-    <p class="prose reveal d2" style="max-width:680px;margin-bottom:clamp(36px,5vh,56px);">We asked: <em>"When you need support from a company, which matters more — speed with a good-enough answer, or accuracy even if you have to wait?"</em> We expected the AI-savvy crowd to choose speed. They didn't.</p>
+    <p class="prose reveal d2" style="max-width:680px;margin-bottom:clamp(36px,5vh,56px);">We asked: <em>"When you need support from a company, which matters more: speed with a good-enough answer, or accuracy even if you have to wait?"</em> We expected the AI-savvy crowd to choose speed. They didn't.</p>
     <div class="two-col">
       <div>
         <div class="table-wrap reveal d2">
@@ -682,8 +740,8 @@
             <thead><tr><th>Group</th><th>Accuracy</th><th>Speed</th><th>Don't Know</th></tr></thead>
             <tbody>
               <tr><td>All respondents (n=104)</td><td><strong>78%</strong></td><td>19%</td><td>3%</td></tr>
-              <tr class="hl"><td>AI Adopters — daily/weekly (n=75)</td><td><strong>72%</strong></td><td>27%</td><td>1%</td></tr>
-              <tr><td>Traditional users — rarely/never (n=27)</td><td><strong>93%</strong></td><td><span class="zero">0%</span></td><td>7%</td></tr>
+              <tr class="hl"><td>AI Adopters (daily/weekly, n=75)</td><td><strong>72%</strong></td><td>27%</td><td>1%</td></tr>
+              <tr><td>Traditional users (rarely/never, n=27)</td><td><strong>93%</strong></td><td><span class="zero">0%</span></td><td>7%</td></tr>
             </tbody>
           </table>
         </div>
@@ -948,7 +1006,7 @@
     <div class="matrix-header">
       <span class="section-label reveal">Step 2 · The Prioritization Matrix</span>
       <h3 class="reveal d1">Plot &amp; Decide</h3>
-      <p class="reveal d2">Once you've scored the risk, every GenAI initiative lands somewhere on this grid. The quadrant tells you the right posture — and gives you a shared language to prioritise, sequence, and kill ideas.</p>
+      <p class="reveal d2">Once you've scored the risk, every GenAI initiative lands somewhere on this grid. The quadrant tells you the right posture and gives you a shared language to prioritise, sequence, and kill ideas.</p>
     </div>
     <div id="matrix" class="matrix-wrap">
       <div class="matrix-y"><span>CX Impact →</span></div>
@@ -985,42 +1043,82 @@
 <section class="act-banner">
   <div class="act-banner-num" aria-hidden="true">05</div>
   <div class="act-label reveal">Act 5 · Strategy &amp; Call to Action</div>
-  <h2 class="reveal d1">For high-risk worlds:<br><span class="accent">enable customer-led AI.</span></h2>
-  <p class="act-sub reveal d2">Don't deploy the risk. Provide the trusted source material. 94% of AI Adopters are already doing this with or without you.</p>
+  <h2 class="reveal d1">Three tactical plays.<br><span class="accent">One path forward.</span></h2>
+  <p class="act-sub reveal d2">Not every organisation can move at the same speed. These plays let you sequence your GenAI adoption from lowest risk to highest, building confidence and evidence at each step before committing to the next.</p>
 </section>
 
-<!-- SECTION: Customer-Led AI -->
+<!-- SECTION: Three Tactical Plays -->
 <section class="section">
   <div class="container">
-    <div class="two-col">
-      <div>
-        <span class="section-label reveal">Smart Strategy for High-Risk Worlds</span>
-        <h3 class="reveal d1">Your knowledge base<br>becomes the competitive moat.</h3>
-        <p class="prose reveal d2">For anyone in a regulated industry where the Strategic Bet quadrant is too risky to move on quickly, here is your near-term play. Don't deploy the risk. Provide the trusted source material.</p>
-        <p class="prose reveal d3">Instead of building a risky internal AI, build your knowledge base so structured, accurate, and accessible that customers can use <strong>their own AI</strong> to self-serve from your trusted content. You provide the source. They bring the model. You get the benefit of AI self-service with a fraction of the compliance exposure.</p>
-        <p class="prose reveal d4">Your compliance team can get behind this. Your content team can execute it. And your customers — the ones already using AI daily — will reward you for being the most useful source they can point their tools at.</p>
-        <div class="stat-block purple reveal d5" style="text-align:center;margin-top:28px;">
-          <span class="stat-num p" data-count="94">0%</span>
-          <div class="stat-label">of AI Adopters have already used personal AI to research their problem <em>before calling support.</em><br><strong>They're doing this with or without you.</strong></div>
+    <span class="section-label reveal">Three Plays · Ordered by Risk</span>
+    <h3 class="reveal d1">Match the play<br><em>to your position.</em></h3>
+    <p class="prose reveal d2" style="max-width:720px;margin-bottom:clamp(36px,5vh,56px);">Where you start depends on your industry, your compliance burden, and your leadership's appetite for risk. These three plays are not a menu to pick from. They are a progression. Most organisations should start at Play 01 regardless of ambition, because it builds the internal evidence base that makes Play 02 and 03 defensible.</p>
+
+    <div class="reveal d2">
+      <div class="play-card p1">
+        <div class="play-num-col">
+          <span class="play-num">01</span>
+          <span class="play-badge">Quick Win</span>
+        </div>
+        <div>
+          <div class="play-title">Internal First: Start where the customer can't see the AI.</div>
+          <div class="play-tagline">Deploy AI between your systems and your agents. Keep humans as the customer interface.</div>
+          <div class="play-body">AI summarises call history so agents don't spend three minutes reading before responding. AI suggests the next-best action based on the case context. AI categorises and routes tickets before any human reads them. If the model gets something wrong, a trained human catches it before it reaches the customer. Zero customer-facing compliance exposure. Full productivity gain. This is where you prove ROI internally and build the confidence to go further.</div>
+          <div class="play-list">
+            <div class="play-list-label">What it unlocks</div>
+            <div class="play-item">AI-assisted agent response drafting and tone guidance</div>
+            <div class="play-item">Automated case summarisation at the start of every call</div>
+            <div class="play-item">Smart ticket routing and priority scoring</div>
+            <div class="play-item">Real-time knowledge surfacing during live conversations</div>
+          </div>
         </div>
       </div>
-      <div class="reveal d2 from-r">
-        <div class="control-card green">
-          <div class="ctrl-header">✓ What you control</div>
-          <div class="ctrl-item">Accuracy of your source material</div>
-          <div class="ctrl-item">Structure, findability, and freshness</div>
-          <div class="ctrl-item">Your compliance risk profile</div>
+    </div>
+
+    <div class="reveal d3">
+      <div class="play-card p2">
+        <div class="play-num-col">
+          <span class="play-num">02</span>
+          <span class="play-badge">Strategic Bet</span>
         </div>
-        <div class="control-card red">
-          <div class="ctrl-header">✕ What the customer handles</div>
-          <div class="ctrl-item">The AI model risk</div>
-          <div class="ctrl-item">Hallucination liability</div>
-          <div class="ctrl-item">Their trust relationship with their own AI</div>
-        </div>
-        <div class="insight" style="margin-top:0;">
-          <p>This isn't abdication. It's strategy. You become the authoritative source that AI tools reach for first. That's a defensible competitive position that compounds over time.</p>
+        <div>
+          <div class="play-title">Opt-In Sandbox: Test with customers who volunteer to test.</div>
+          <div class="play-tagline">A defined pilot group, explicit consent, and clear terms. A Strategic Bet with a defined risk perimeter.</div>
+          <div class="play-body">Select a group of customers who explicitly opt in under clear terms. Frame it directly: "This feature uses AI and may occasionally be imperfect. You can always ask for a human agent." The terms and conditions define the experiment, set expectations, and limit liability. You get real-world performance data before building for everyone. They get early access and feel like partners, not test subjects. Our survey found <strong>55% of AI Adopters willing to try an imperfect agent</strong>, with 41% driven by curiosity. That is a significant opt-in pool. Use it before you build for the whole customer base.</div>
+          <div class="play-list">
+            <div class="play-list-label">What it unlocks</div>
+            <div class="play-item">Real performance data that no lab test can replicate</div>
+            <div class="play-item">Defined liability boundaries through explicit T&amp;Cs</div>
+            <div class="play-item">A clear path from pilot to production, with evidence</div>
+            <div class="play-item">Customer insight that makes your board case credible</div>
+          </div>
         </div>
       </div>
+    </div>
+
+    <div class="reveal d4">
+      <div class="play-card p3">
+        <div class="play-num-col">
+          <span class="play-num">03</span>
+          <span class="play-badge">Long Game</span>
+        </div>
+        <div>
+          <div class="play-title">Structured Content: Become the source every AI reaches for.</div>
+          <div class="play-tagline">Design your knowledge base to be machine-readable and agent-accessible. Outsource the inference risk to the platform the customer already trusts.</div>
+          <div class="play-body">94% of AI Adopters already use personal AI to research their problem before contacting support. They are doing this whether your content is ready for it or not. The strategic move is to design your help articles, product policies, and FAQs to be clean, accurate, and accessible via structured sitemap or API. When a customer's AI retrieves information about your product, it finds your authoritative version. The AI inference happens entirely on a third-party platform. Your liability is limited to the accuracy of what you publish. You are not the AI operator. You are the knowledge publisher. And if your content is better structured than your competitors', you are the default source for any AI that covers your category.</div>
+          <div class="play-list">
+            <div class="play-list-label">What it unlocks</div>
+            <div class="play-item">Content becomes a scalable self-service layer at no model risk</div>
+            <div class="play-item">Compliance exposure stays at source quality, not model inference</div>
+            <div class="play-item">Positions you as the authoritative AI reference in your category</div>
+            <div class="play-item">Returns compound as AI adoption grows across your customer base</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight reveal d5" style="margin-top:32px;">
+      <p>These plays are not mutually exclusive. Most mature programmes run all three simultaneously: agents are using Play 01 today, a pilot cohort is running Play 02, and the content team is executing Play 03 in the background. The sequencing is about where you start, not where you stop.</p>
     </div>
   </div>
 </section>
@@ -1031,7 +1129,7 @@
     <div class="cta-box reveal">
       <div class="cta-box-label">Ask This on Monday Morning</div>
       <div class="cta-box-q">"What is our official triage model for GenAI in our customer journey?"</div>
-      <div class="cta-box-note">If no one can answer it — you now have the framework to lead that conversation.</div>
+      <div class="cta-box-note">If no one can answer it, you now have the framework to lead that conversation.</div>
     </div>
     <div>
       <div class="takeaway reveal d1">
