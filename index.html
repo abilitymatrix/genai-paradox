@@ -581,6 +581,8 @@
     @media (max-width:780px) { .right-offset { padding-top: 0; } }
     .prose-align { padding-top: clamp(86px,8.5vw,114px); }
     @media (max-width:780px) { .prose-align { padding-top: 0; } }
+    .sticky-col { position: sticky; top: 78px; align-self: start; }
+    @media (max-width:780px) { .sticky-col { position: static; } }
 
     /* ── RISK CARDS (Act 3) ── */
     .risk-cards { display:flex; flex-direction:column; gap:10px; margin-top:32px; }
@@ -864,7 +866,7 @@
           </div>
         </div>
       </div>
-      <div class="reveal d2 from-r right-offset">
+      <div class="reveal d2 from-r right-offset sticky-col">
         <p style="font-size:13px;color:var(--muted);font-style:italic;margin-bottom:18px;">"How do you feel about support chatbots that can only offer a menu of options?" (n=104)</p>
         <div class="bar-chart">
           <div class="bar-row">
