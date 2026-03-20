@@ -541,6 +541,20 @@
     .workshop-cta:hover { background: #d4521f; }
     @media (max-width: 700px) { .workshop-card { flex-basis: 100%; } }
 
+    /* ── MID-PAGE WORKSHOP CTA ── */
+    .midcta { background: var(--dark); padding: clamp(44px,7vh,80px) 0; }
+    .midcta-inner { display:flex; align-items:center; justify-content:space-between; gap:clamp(24px,4vw,56px); flex-wrap:wrap; }
+    .midcta-eye { font-family:'Raleway',sans-serif; font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:var(--o); margin-bottom:9px; }
+    .midcta-head { font-family:'Raleway',sans-serif; font-weight:800; font-size:clamp(18px,2.2vw,26px); color:var(--w); line-height:1.25; margin-bottom:10px; }
+    .midcta-body { font-size:clamp(14px,1.3vw,16px); color:rgba(255,255,255,0.5); line-height:1.7; max-width:520px; }
+    .midcta-text { flex:1; min-width:260px; }
+    .midcta-side { display:flex; flex-direction:column; align-items:flex-start; gap:12px; flex-shrink:0; }
+    .midcta-btn { display:inline-block; background:var(--o); color:var(--w); font-family:'Raleway',sans-serif; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; text-decoration:none; padding:13px 26px; border-radius:6px; transition:background 0.2s; white-space:nowrap; }
+    .midcta-btn:hover { background:#d4521f; }
+    .midcta-link { font-size:14px; color:rgba(255,255,255,0.4); }
+    .midcta-link a { color:rgba(255,255,255,0.6); text-underline-offset:3px; }
+    .midcta-link a:hover { color:var(--w); }
+
     /* ── FOOTER ── */
     .footer {
       background: var(--dark); padding: 22px clamp(24px, 5vw, 80px);
@@ -1090,6 +1104,23 @@
     </div>
     <div class="insight" style="margin-top:56px;">
       <p>The Danger Zone is where the hardest conversations happen. High risk, low reward, but often where the most exciting-sounding ideas land. This framework lets you say no with data, not just instinct.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MID-PAGE WORKSHOP CTA -->
+<section class="midcta">
+  <div class="container">
+    <div class="midcta-inner reveal">
+      <div class="midcta-text">
+        <div class="midcta-eye">GenAI Triage Workshop</div>
+        <div class="midcta-head">Your team has GenAI ideas.<br>Now score them before you build.</div>
+        <div class="midcta-body">The matrix is most powerful when your whole leadership team is in the room, working through your actual initiatives together. A facilitated half-day takes this framework from concept to a signed-off roadmap your compliance team can live with.</div>
+      </div>
+      <div class="midcta-side">
+        <a href="workshop.html" class="midcta-btn">See the workshop →</a>
+        <div class="midcta-link">or <a href="https://l.abilitymatrix.com/Akos30" target="_blank" rel="noopener">book a 30-min conversation</a></div>
+      </div>
     </div>
   </div>
 </section>

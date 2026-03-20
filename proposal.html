@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>GenAI Triage Workshop — Proposal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --p:     #4E2A84;
+      --pm:    #7255A3;
+      --pl:    #C5B3E6;
+      --pxl:   #F0EBF9;
+      --o:     #E8602C;
+      --dark:  #1A1A2E;
+      --muted: #5A5A72;
+      --border:#E8E0F5;
+      --green: #2D8A4E;
+      --amber: #D4851A;
+      --red:   #C0392B;
+      --grey:  #6B7280;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #EAEAF0; color: var(--dark); line-height: 1.7; }
+
+    /* ── LAYOUT ── */
+    .app { display: flex; min-height: 100vh; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 272px; flex-shrink: 0;
+      background: var(--dark);
+      position: sticky; top: 0; height: 100vh; overflow-y: auto;
+      display: flex; flex-direction: column;
+    }
+    .sb-header { background: var(--p); padding: 18px 20px; }
+    .sb-title { font-family: 'Raleway', sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--pl); margin-bottom: 3px; }
+    .sb-sub { font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.5; margin-bottom: 12px; }
+    .sb-print {
+      display: block; width: 100%;
+      background: var(--o); color: #fff; border: none; cursor: pointer;
+      font-family: 'Raleway', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 10px; border-radius: 5px; transition: background 0.2s;
+    }
+    .sb-print:hover { background: #d4521f; }
+    .sb-body { padding: 14px 18px; flex: 1; overflow-y: auto; }
+    .sb-group { margin-bottom: 16px; }
+    .sb-group-title {
+      font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.28); margin-bottom: 8px; padding-bottom: 5px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .sb-field { margin-bottom: 8px; }
+    .sb-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 3px; display: block; }
+    .sb-input {
+      width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px; padding: 7px 9px;
+      color: #fff; font-family: 'Inter', sans-serif; font-size: 12px;
+      outline: none; transition: border-color 0.2s;
+    }
+    .sb-input:focus { border-color: var(--o); background: rgba(255,255,255,0.1); }
+    .sb-input::placeholder { color: rgba(255,255,255,0.18); }
+    textarea.sb-input { resize: vertical; min-height: 76px; line-height: 1.5; }
+    select.sb-input { cursor: pointer; }
+    .sb-footer {
+      padding: 12px 18px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 10px; color: rgba(255,255,255,0.18); line-height: 1.6;
+    }
+
+    /* ── PROPOSAL AREA ── */
+    .proposal-area { flex: 1; padding: 28px 32px; overflow-y: auto; }
+
+    /* ── PAGE ── */
+    .page {
+      background: #fff;
+      width: 794px; min-height: 1122px;
+      margin: 0 auto 28px;
+      padding: 54px 58px 80px;
+      box-shadow: 0 2px 18px rgba(0,0,0,0.12);
+      position: relative; overflow: hidden;
+    }
+
+    /* ── FIELD VALUES (highlighted on screen, plain on print) ── */
+    .fv { color: var(--o); font-weight: 600; }
+    .fv.empty { color: var(--pl); font-style: italic; font-weight: 400; }
+
+    /* ── PAGE FOOTER ── */
+    .pg-footer {
+      position: absolute; bottom: 24px; left: 58px; right: 58px;
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--border); padding-top: 10px;
+    }
+    .pg-footer span { font-size: 10px; color: var(--muted); }
+
+    /* ── COVER PAGE ── */
+    .cover-page {
+      background: var(--p);
+      padding: 0; min-height: 1122px;
+      display: flex; flex-direction: column;
+    }
+    .cover-top {
+      padding: 44px 58px 0;
+      display: flex; justify-content: space-between; align-items: flex-start;
+    }
+    .cover-brand { display: flex; align-items: center; gap: 10px; }
+    .cover-brand-name { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 14px; color: var(--pl); letter-spacing: 1px; }
+    .cover-tag { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.22); }
+    .cover-main { flex: 1; display: flex; align-items: center; padding: 0 58px; }
+    .cover-eyebrow { font-family: 'Raleway', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 5px; text-transform: uppercase; color: var(--o); margin-bottom: 18px; }
+    .cover-title { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 58px; color: #fff; line-height: 1.05; letter-spacing: -0.5px; margin-bottom: 8px; }
+    .cover-sub { font-family: 'Raleway', sans-serif; font-weight: 300; font-size: 22px; color: var(--pl); margin-bottom: 48px; }
+    .cover-for-lbl { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 7px; }
+    .cover-company { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 32px; color: #fff; margin-bottom: 6px; }
+    .cover-contact { font-size: 16px; color: var(--pl); }
+    .cover-bottom {
+      padding: 0 58px 44px;
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .cover-date-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 4px; }
+    .cover-date-val { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 15px; color: var(--pl); }
+    .cover-deco { position: absolute; bottom: -24px; right: -12px; font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 220px; color: rgba(255,255,255,0.03); line-height: 1; user-select: none; pointer-events: none; }
+    .cover-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 5px; background: linear-gradient(to right, var(--o), var(--pl)); }
+
+    /* ── SECTION TYPOGRAPHY ── */
+    .s-label { font-family: 'Raleway', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--o); margin-bottom: 9px; display: block; }
+    .s-h2 { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 32px; color: var(--p); line-height: 1.12; margin-bottom: 22px; }
+    .s-h2 em { font-style: normal; color: var(--o); }
+    .s-h3 { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 15px; color: var(--p); margin-bottom: 8px; }
+    .prose { font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 12px; }
+    .prose:last-child { margin-bottom: 0; }
+    .prose strong { color: var(--dark); font-weight: 600; }
+
+    /* ── DIVIDER ── */
+    .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+    /* ── BOXES ── */
+    .hbox { background: var(--pxl); border-left: 4px solid var(--p); padding: 13px 16px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+    .hbox p { font-size: 14px; color: var(--p); font-weight: 500; line-height: 1.6; margin: 0; }
+    .hbox.orange { background: #FFF3EE; border-left-color: var(--o); }
+    .hbox.orange p { color: var(--dark); }
+
+    /* ── STAT ROW ── */
+    .stat-row { display: flex; gap: 12px; margin: 18px 0; }
+    .stat-callout { flex: 1; background: var(--pxl); border-radius: 7px; padding: 14px; text-align: center; }
+    .stat-callout.orange { background: #FFF3EE; }
+    .sc-num { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 34px; line-height: 1; color: var(--p); }
+    .stat-callout.orange .sc-num { color: var(--o); }
+    .sc-txt { font-size: 11px; color: var(--muted); line-height: 1.4; margin-top: 5px; }
+
+    /* ── TWO COL ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+    /* ── MINI MATRIX ── */
+    .mini-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 14px 0; }
+    .mm-cell { border-radius: 7px; padding: 12px 14px; }
+    .mm-cell.g  { background: #E8F5EE; border: 1.5px solid var(--green); }
+    .mm-cell.a  { background: #FEF9E7; border: 1.5px solid var(--amber); }
+    .mm-cell.gr { background: #F3F4F6; border: 1.5px solid var(--grey); }
+    .mm-cell.r  { background: #FEF0F0; border: 1.5px solid var(--red); }
+    .mm-cell h5 { font-family: 'Raleway', sans-serif; font-size: 13px; font-weight: 800; margin-bottom: 3px; }
+    .mm-cell.g  h5 { color: var(--green); }
+    .mm-cell.a  h5 { color: var(--amber); }
+    .mm-cell.gr h5 { color: var(--grey); }
+    .mm-cell.r  h5 { color: var(--red); }
+    .mm-cell p { font-size: 11px; color: var(--muted); line-height: 1.4; margin: 0; }
+
+    /* ── AGENDA ── */
+    .agenda-item { display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+    .agenda-item:last-child { border-bottom: none; }
+    .agenda-time { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 12px; color: var(--pm); flex-shrink: 0; width: 72px; padding-top: 2px; }
+    .agenda-text h4 { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 2px; }
+    .agenda-text p { font-size: 12px; color: var(--muted); line-height: 1.5; margin: 0; }
+    .a-badge { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; margin-left: 5px; vertical-align: middle; }
+    .a-badge.b { background: var(--pxl); color: var(--p); }
+    .a-badge.g { background: #E8F5EE; color: var(--green); }
+
+    /* ── DELIVERABLES GRID ── */
+    .del-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px; }
+    .del-card { background: var(--pxl); border-radius: 7px; padding: 16px; }
+    .del-icon { font-size: 22px; margin-bottom: 7px; display: block; }
+    .del-title { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 13px; color: var(--p); margin-bottom: 4px; }
+    .del-body { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* ── INVESTMENT TABLE ── */
+    .inv-table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 13px; }
+    .inv-table th { background: var(--p); color: #fff; padding: 9px 14px; text-align: left; font-weight: 600; font-size: 11px; letter-spacing: 0.5px; }
+    .inv-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .inv-table tr:last-child td { border-bottom: none; }
+
+    /* ── INCLUDES LIST ── */
+    .inc-list { list-style: none; }
+    .inc-list li { padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--dark); display: flex; gap: 9px; align-items: flex-start; line-height: 1.5; }
+    .inc-list li:last-child { border-bottom: none; }
+    .inc-list li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+
+    /* ── NEXT STEPS ── */
+    .nxt-step { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
+    .nxt-step:last-child { margin-bottom: 0; }
+    .nxt-num { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 44px; color: var(--pl); line-height: 1; flex-shrink: 0; width: 48px; }
+    .nxt-content h4 { font-family: 'Raleway', sans-serif; font-size: 15px; font-weight: 700; color: var(--p); margin-bottom: 3px; }
+    .nxt-content p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    /* ── SIGNATURE BLOCK ── */
+    .sig-block { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 36px; }
+    .sig-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+    .sig-line { border-bottom: 1px solid var(--dark); margin-bottom: 5px; height: 34px; }
+    .sig-name { font-size: 13px; color: var(--dark); font-weight: 600; }
+    .sig-title { font-size: 11px; color: var(--muted); }
+
+    /* ── BIO PAGE ── */
+    .bio-grid { display: grid; grid-template-columns: 190px 1fr; gap: 32px; margin-bottom: 24px; }
+    .bio-photo { background: var(--pxl); border-radius: 10px; height: 190px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px; }
+    .bio-photo-icon { font-size: 44px; }
+    .bio-photo-txt { font-size: 10px; color: var(--pm); }
+    .cred-badge { display: inline-flex; align-items: center; gap: 7px; background: var(--p); color: #fff; border-radius: 6px; padding: 7px 13px; font-family: 'Raleway', sans-serif; font-size: 12px; font-weight: 700; margin-top: 12px; }
+
+    /* ── PRINT STYLES ── */
+    @media print {
+      body { background: white; }
+      .sidebar { display: none !important; }
+      .app { display: block; }
+      .proposal-area { padding: 0; }
+      .page {
+        width: 100% !important; min-height: 0 !important;
+        margin: 0 !important; padding: 18mm 20mm 22mm !important;
+        box-shadow: none !important;
+        break-after: page; page-break-after: always;
+      }
+      .page:last-child { break-after: auto; page-break-after: auto; }
+      .cover-page { padding: 0 !important; min-height: 100vh !important; }
+      .pg-footer { bottom: 18mm; left: 20mm; right: 20mm; }
+      .fv { color: var(--dark) !important; font-weight: inherit !important; }
+      .fv.empty { color: var(--muted) !important; font-style: italic !important; }
+      a { color: inherit !important; }
+    }
+    @page { size: letter; margin: 0; }
+  </style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="sidebar">
+    <div class="sb-header">
+      <div class="sb-title">Proposal Builder</div>
+      <div class="sb-sub">Fill in the fields. The document updates live.</div>
+      <button class="sb-print" onclick="window.print()">Print / Save as PDF ↗</button>
+    </div>
+    <div class="sb-body">
+
+      <div class="sb-group">
+        <div class="sb-group-title">Client</div>
+        <div class="sb-field">
+          <label class="sb-label">Company name</label>
+          <input type="text" class="sb-input" data-input="company" placeholder="Acme Financial">
+        </div>
+        <div class="sb-field">
+          <label class="sb-label">Contact name</label>
+          <input type="text" class="sb-input" data-input="contact_name" placeholder="Jane Smith">
+        </div>
+        <div class="sb-field">
+          <label class="sb-label">Contact title</label>
+          <input type="text" class="sb-input" data-input="contact_title" placeholder="VP Customer Experience">
+        </div>
+      </div>
+
+      <div class="sb-group">
+        <div class="sb-group-title">Dates</div>
+        <div class="sb-field">
+          <label class="sb-label">Proposal date</label>
+          <input type="text" class="sb-input" data-input="proposal_date" id="inp-date">
+        </div>
+        <div class="sb-field">
+          <label class="sb-label">Valid until</label>
+          <input type="text" class="sb-input" data-input="valid_until" id="inp-valid">
+        </div>
+        <div class="sb-field">
+          <label class="sb-label">Proposed workshop date</label>
+          <input type="text" class="sb-input" data-input="workshop_date" placeholder="TBD — to be confirmed">
+        </div>
+      </div>
+
+      <div class="sb-group">
+        <div class="sb-group-title">Session Details</div>
+        <div class="sb-field">
+          <label class="sb-label">Number of participants</label>
+          <input type="text" class="sb-input" data-input="participants" placeholder="Up to 12 participants">
+        </div>
+        <div class="sb-field">
+          <label class="sb-label">Location</label>
+          <input type="text" class="sb-input" data-input="location" placeholder="Toronto, ON (on-site)">
+        </div>
+        <div class="sb-field">
+          <label class="sb-label">Duration</label>
+          <select class="sb-input" data-input="duration">
+            <option value="Half-day (4 hours)">Half-day (4 hours)</option>
+            <option value="Full-day (7 hours)">Full-day (7 hours)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sb-group">
+        <div class="sb-group-title">Investment</div>
+        <div class="sb-field">
+          <label class="sb-label">Workshop fee</label>
+          <input type="text" class="sb-input" data-input="investment" placeholder="$X,XXX + applicable taxes">
+        </div>
+        <div class="sb-field">
+          <label class="sb-label">Payment terms</label>
+          <input type="text" class="sb-input" data-input="payment_terms" placeholder="50% on signature, 50% on delivery">
+        </div>
+      </div>
+
+      <div class="sb-group">
+        <div class="sb-group-title">Custom Content</div>
+        <div class="sb-field">
+          <label class="sb-label">Situation paragraph (shown on page 2)</label>
+          <textarea class="sb-input" data-input="situation" rows="5" placeholder="Describe what's happening at this organisation right now — the pressure they're under, the specific context that makes this timely for them..."></textarea>
+        </div>
+      </div>
+
+    </div>
+    <div class="sb-footer">
+      <strong style="color:rgba(255,255,255,0.3);">To print as PDF:</strong> Click the button above. In the print dialog, set Destination to "Save as PDF", Margins to "None", and scale to 100%.
+    </div>
+  </aside>
+
+  <!-- ══ PROPOSAL PAGES ══ -->
+  <div class="proposal-area">
+
+    <!-- PAGE 1: COVER -->
+    <div class="page cover-page">
+      <div class="cover-top">
+        <div class="cover-brand">
+          <svg width="28" height="28" viewBox="0 0 38 38" fill="none">
+            <polygon points="19,1 37,19 19,37 1,19" stroke="#C5B3E6" stroke-width="2"/>
+            <polygon points="19,8 30,19 19,30 8,19" fill="#C5B3E6"/>
+          </svg>
+          <span class="cover-brand-name">Akos Tolnai, CCXP</span>
+        </div>
+        <span class="cover-tag">Confidential Proposal</span>
+      </div>
+      <div class="cover-main">
+        <div>
+          <div class="cover-eyebrow">Workshop Proposal</div>
+          <div class="cover-title">GenAI Triage<br>Workshop</div>
+          <div class="cover-sub">From framework to roadmap. In one day.</div>
+          <div class="cover-for-lbl">Prepared for</div>
+          <div class="cover-company fv" data-field="company" data-default="[Client Company]">[Client Company]</div>
+          <div class="cover-contact">
+            Attn: <span class="fv" data-field="contact_name" data-default="[Contact Name]">[Contact Name]</span>,
+            <span class="fv" data-field="contact_title" data-default="[Title]">[Title]</span>
+          </div>
+        </div>
+      </div>
+      <div class="cover-bottom">
+        <div>
+          <div class="cover-date-label">Date</div>
+          <div class="cover-date-val fv" data-field="proposal_date" data-default="[Proposal Date]">[Proposal Date]</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="cover-date-label">Valid until</div>
+          <div class="cover-date-val fv" data-field="valid_until" data-default="[Valid Until]">[Valid Until]</div>
+        </div>
+      </div>
+      <div class="cover-deco" aria-hidden="true">→</div>
+      <div class="cover-bar"></div>
+    </div>
+
+    <!-- PAGE 2: THE CHALLENGE -->
+    <div class="page">
+      <span class="s-label">The Challenge</span>
+      <h2 class="s-h2">Where <span class="fv" data-field="company" data-default="[Company]">[Company]</span> Stands Today</h2>
+
+      <div class="hbox orange" style="margin-bottom:20px;">
+        <p class="fv" data-field="situation" data-default="Add a custom situation paragraph in the sidebar to describe this organisation's specific context and why this workshop is timely for them." style="white-space:pre-wrap;">Add a custom situation paragraph in the sidebar to describe this organisation's specific context and why this workshop is timely for them.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3 class="s-h3">The Universal Pressure</h3>
+      <p class="prose">Every CX leader right now is caught between two forces: the board pushing for GenAI deployment, and the compliance team asking what happens when it goes wrong. Moving fast enough to matter, carefully enough to stay out of the headlines. This tension is not unique to <span class="fv" data-field="company" data-default="[Company]">[Company]</span> — it is the defining challenge of CX leadership in 2026.</p>
+      <p class="prose">The stakes are concrete. An independent consumer survey of 104 respondents across Canada and the US found that 83% are frustrated or infuriated by scripted chatbots. Meanwhile, 94% of daily AI users research their problem using personal AI before contacting support. Your customers have experienced what genuinely good AI feels like. They are now applying that standard to your support channel.</p>
+
+      <div class="stat-row">
+        <div class="stat-callout orange">
+          <div class="sc-num">78%</div>
+          <div class="sc-txt">chose accuracy over speed, even among daily AI users</div>
+        </div>
+        <div class="stat-callout">
+          <div class="sc-num">83%</div>
+          <div class="sc-txt">frustrated or infuriated by scripted, menu-based chatbots</div>
+        </div>
+        <div class="stat-callout orange">
+          <div class="sc-num">94%</div>
+          <div class="sc-txt">of AI adopters research their problem before contacting support</div>
+        </div>
+      </div>
+
+      <div class="hbox">
+        <p>The question is no longer whether to adopt GenAI in CX. It is how to sequence it, score it, and govern it so that speed and safety are not in conflict. That is exactly what the GenAI Triage Workshop addresses.</p>
+      </div>
+
+      <div class="pg-footer">
+        <span>GenAI Triage Workshop · Proposal for <span data-field="company" data-default="[Company]">[Company]</span></span>
+        <span>Confidential · <span data-field="proposal_date" data-default="[Date]">[Date]</span></span>
+      </div>
+    </div>
+
+    <!-- PAGE 3: THE WORKSHOP -->
+    <div class="page">
+      <span class="s-label">The Workshop</span>
+      <h2 class="s-h2">Introducing the<br><em>GenAI Triage Workshop</em></h2>
+
+      <div class="hbox" style="margin-bottom:20px;">
+        <p><strong>The outcome:</strong> Your team walks away with a scored, prioritised GenAI roadmap your compliance team can sign off on.</p>
+      </div>
+
+      <p class="prose">The workshop applies the CX GenAI Prioritization Matrix — a two-axis decision framework — to your organisation's specific GenAI initiatives. Rather than debating ideas in the abstract, every initiative gets scored against three risk dimensions and plotted on the matrix. The result is a shared language for moving fast where it is safe, and stopping where it is not.</p>
+      <p class="prose">This is not a presentation or a training. It is a working session. Your team brings the initiatives; the framework provides the structure. By the end, every idea in the room has a quadrant, a posture, and a defensible business case.</p>
+
+      <div class="divider"></div>
+
+      <h3 class="s-h3" style="margin-bottom:10px;">The Prioritization Matrix</h3>
+      <p class="prose" style="font-size:13px;margin-bottom:10px;">Every GenAI initiative maps to one of four quadrants based on CX impact potential and customer-facing risk. The scoring happens before the plotting — which is where most organisations skip a critical step.</p>
+
+      <div class="mini-matrix">
+        <div class="mm-cell g">
+          <h5>🟢 Quick Wins</h5>
+          <p>High impact, low risk. Build momentum and internal evidence here first.</p>
+        </div>
+        <div class="mm-cell a">
+          <h5>🟡 Strategic Bets</h5>
+          <p>High impact, high risk. Needs executive air cover, pilots, and defined guardrails.</p>
+        </div>
+        <div class="mm-cell gr">
+          <h5>⬜ Incremental Gains</h5>
+          <p>Low impact, low risk. Good for ops efficiency. Don't oversell internally.</p>
+        </div>
+        <div class="mm-cell r">
+          <h5>🔴 Danger Zone</h5>
+          <p>Low impact, high risk. The hardest no to say, and the most important one.</p>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--muted);margin-top:6px;">Y-axis: CX Impact potential · X-axis: Audience Tolerance and Compliance Risk</p>
+
+      <div class="divider"></div>
+
+      <h3 class="s-h3" style="margin-bottom:10px;">The Risk Scorecard</h3>
+      <p class="prose" style="font-size:13px;">Before any idea lands on the matrix, it passes through a three-factor scorecard: (1) the customer's emotional state at the point of AI contact, (2) your audience's AI tolerance — not assumed, but evidenced — and (3) your compliance burden in the relevant context. The scorecard surfaces assumptions your team didn't know they were making.</p>
+
+      <div class="pg-footer">
+        <span>GenAI Triage Workshop · Proposal for <span data-field="company" data-default="[Company]">[Company]</span></span>
+        <span>Confidential · <span data-field="proposal_date" data-default="[Date]">[Date]</span></span>
+      </div>
+    </div>
+
+    <!-- PAGE 4: SESSION FORMAT -->
+    <div class="page">
+      <span class="s-label">Session Format</span>
+      <h2 class="s-h2">How the<br><em>Day Works</em></h2>
+
+      <div class="two-col" style="margin-bottom:20px;">
+        <div>
+          <p class="prose" style="margin-bottom:6px;"><strong>Duration:</strong> <span class="fv" data-field="duration" data-default="Half-day (4 hours)">Half-day (4 hours)</span></p>
+          <p class="prose" style="margin-bottom:6px;"><strong>Participants:</strong> <span class="fv" data-field="participants" data-default="[Participants]">[Participants]</span></p>
+          <p class="prose" style="margin-bottom:6px;"><strong>Proposed date:</strong> <span class="fv" data-field="workshop_date" data-default="TBD — to be confirmed">TBD — to be confirmed</span></p>
+          <p class="prose"><strong>Location:</strong> <span class="fv" data-field="location" data-default="[Location]">[Location]</span></p>
+        </div>
+        <div>
+          <p class="prose">The session is structured as a facilitated working session. Participants should expect to contribute actively: bringing their own initiatives, scoring them honestly, and leaving with outputs they can act on immediately. No slides. No homework. Just the framework, your initiatives, and a shared decision.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3 class="s-h3" style="margin-bottom:3px;">Agenda <span style="font-family:'Inter',sans-serif;font-weight:400;font-size:12px;color:var(--muted);">(half-day format shown; full-day includes extended working blocks and implementation sprint)</span></h3>
+
+      <div class="agenda-item">
+        <div class="agenda-time">09:00</div>
+        <div class="agenda-text">
+          <h4>Welcome and Context Setting</h4>
+          <p>The GenAI Paradox: the consumer data, the board mandate, and the compliance tension. Why the framework exists and what it will do for the room today.</p>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-time">09:30</div>
+        <div class="agenda-text">
+          <h4>The Scoring Framework <span class="a-badge b">Interactive</span></h4>
+          <p>Introduction to the three risk dimensions. Teams score a sample initiative together to calibrate assumptions before scoring their own.</p>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-time">10:00</div>
+        <div class="agenda-text">
+          <h4>Scoring Your Initiatives <span class="a-badge b">Working Session</span></h4>
+          <p>Each team scores their own active or proposed GenAI initiatives against the three risk dimensions. Facilitator circulates and challenges assumptions.</p>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-time">10:30</div>
+        <div class="agenda-text"><h4>Break</h4></div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-time">10:45</div>
+        <div class="agenda-text">
+          <h4>Plotting the Matrix <span class="a-badge b">Working Session</span></h4>
+          <p>Facilitator-guided matrix plotting. Each initiative lands in a quadrant. Group alignment on posture for each: proceed, plan, park, or kill.</p>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-time">11:30</div>
+        <div class="agenda-text">
+          <h4>Roadmap Output and Business Case Language <span class="a-badge g">Deliverable</span></h4>
+          <p>Drafting the shared language: Quick Wins to act on now, Strategic Bets to plan with guardrails, Danger Zone items to document with rationale. Internal business case framing for legal, compliance, and the board.</p>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-time">12:00</div>
+        <div class="agenda-text">
+          <h4>Close and Next Steps</h4>
+          <p>Review of all outputs, follow-up commitments, and access to the post-session summary document.</p>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <span>GenAI Triage Workshop · Proposal for <span data-field="company" data-default="[Company]">[Company]</span></span>
+        <span>Confidential · <span data-field="proposal_date" data-default="[Date]">[Date]</span></span>
+      </div>
+    </div>
+
+    <!-- PAGE 5: DELIVERABLES -->
+    <div class="page">
+      <span class="s-label">Deliverables</span>
+      <h2 class="s-h2">What You<br><em>Walk Away With</em></h2>
+
+      <p class="prose" style="max-width:560px;margin-bottom:20px;">By the end of the session, your team has tangible, actionable outputs: a working roadmap with shared language and a governance framework your compliance team can engage with. Not slides from someone else's research — your organisation's own initiatives, scored and sequenced.</p>
+
+      <div class="del-grid">
+        <div class="del-card">
+          <span class="del-icon">🗺️</span>
+          <div class="del-title">Scored Initiative Map</div>
+          <div class="del-body">Every active GenAI initiative in your pipeline scored against the three risk dimensions and plotted on the Prioritization Matrix.</div>
+        </div>
+        <div class="del-card">
+          <span class="del-icon">✅</span>
+          <div class="del-title">Identified Quick Wins</div>
+          <div class="del-body">High-impact, low-risk initiatives with a clear green light. Ready to move to build. No further approvals required.</div>
+        </div>
+        <div class="del-card">
+          <span class="del-icon">📋</span>
+          <div class="del-title">Strategic Bets with Guardrails</div>
+          <div class="del-body">Higher-risk initiatives with an agreed posture, defined pilot parameters, and governance framing needed to proceed safely.</div>
+        </div>
+        <div class="del-card">
+          <span class="del-icon">🚫</span>
+          <div class="del-title">Documented Hard Nos</div>
+          <div class="del-body">Danger Zone ideas with the rationale documented. Turns "not yet" into a defensible position when stakeholders push back.</div>
+        </div>
+        <div class="del-card">
+          <span class="del-icon">💬</span>
+          <div class="del-title">Shared Business Case Language</div>
+          <div class="del-body">The framing and vocabulary to present each decision to legal, compliance, and the board. Built during the session, not retrofitted after.</div>
+        </div>
+        <div class="del-card">
+          <span class="del-icon">📄</span>
+          <div class="del-title">Post-Session Summary</div>
+          <div class="del-body">A written summary of all scored initiatives and the full roadmap output, delivered within 5 business days of the session.</div>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <span>GenAI Triage Workshop · Proposal for <span data-field="company" data-default="[Company]">[Company]</span></span>
+        <span>Confidential · <span data-field="proposal_date" data-default="[Date]">[Date]</span></span>
+      </div>
+    </div>
+
+    <!-- PAGE 6: INVESTMENT -->
+    <div class="page">
+      <span class="s-label">Investment</span>
+      <h2 class="s-h2">The Investment</h2>
+
+      <table class="inv-table">
+        <thead>
+          <tr><th>Item</th><th>Detail</th><th style="white-space:nowrap;">Fee</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>GenAI Triage Workshop</strong></td>
+            <td>
+              <span class="fv" data-field="duration" data-default="Half-day (4 hours)">Half-day (4 hours)</span>
+              &nbsp;·&nbsp; <span class="fv" data-field="participants" data-default="[Participants]">[Participants]</span>
+              &nbsp;·&nbsp; <span class="fv" data-field="location" data-default="[Location]">[Location]</span>
+              &nbsp;·&nbsp; <span class="fv" data-field="workshop_date" data-default="[Date TBD]">[Date TBD]</span>
+            </td>
+            <td style="white-space:nowrap;font-weight:700;"><span class="fv" data-field="investment" data-default="[Fee]">[Fee]</span></td>
+          </tr>
+          <tr>
+            <td>Travel and Accommodation</td>
+            <td>If applicable, billed at cost following the session with receipts</td>
+            <td>At cost</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="hbox" style="margin-bottom:20px;">
+        <p><strong>Payment terms:</strong> <span class="fv" data-field="payment_terms" data-default="[Payment Terms]">[Payment Terms]</span></p>
+      </div>
+
+      <h3 class="s-h3" style="margin-bottom:10px;">Included in the fee</h3>
+      <ul class="inc-list" style="margin-bottom:20px;">
+        <li>Pre-session questionnaire to map your current GenAI initiatives and blockers</li>
+        <li>Preparation and facilitation for the full session duration</li>
+        <li>Printed session canvas (A1 Prioritization Matrix for use during the session)</li>
+        <li>Digital access to all frameworks, scoring tools, and reference materials</li>
+        <li>Post-session written summary with all scored initiatives and roadmap output</li>
+        <li>30-minute follow-up call within 30 days of the session</li>
+      </ul>
+
+      <div class="divider"></div>
+
+      <h3 class="s-h3" style="margin-bottom:10px;">Optional Add-ons</h3>
+      <div class="two-col">
+        <div>
+          <p class="prose"><strong>Board Summary Deck</strong><br>A summary deck translating the roadmap output into board-ready language and framing. Available as a follow-on engagement.</p>
+        </div>
+        <div>
+          <p class="prose"><strong>Second Working Session</strong><br>A deeper implementation sprint for organisations ready to move from roadmap to an execution plan. Pricing on request.</p>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <span>GenAI Triage Workshop · Proposal for <span data-field="company" data-default="[Company]">[Company]</span></span>
+        <span>Confidential · <span data-field="proposal_date" data-default="[Date]">[Date]</span></span>
+      </div>
+    </div>
+
+    <!-- PAGE 7: ABOUT AKOS -->
+    <div class="page">
+      <span class="s-label">Your Facilitator</span>
+      <h2 class="s-h2">About<br><em>Akos Tolnai</em></h2>
+
+      <div class="bio-grid">
+        <div>
+          <div class="bio-photo">
+            <div class="bio-photo-icon">👤</div>
+            <div class="bio-photo-txt">Replace with photo</div>
+          </div>
+          <div class="cred-badge"><span>✓</span><span>CCXP Certified</span></div>
+          <p style="font-size:11px;color:var(--muted);margin-top:5px;line-height:1.4;">Certified Customer Experience Professional (CXPA)</p>
+        </div>
+        <div>
+          <p class="prose">Akos Tolnai, CCXP, is a senior customer experience strategist specialising in the intersection of AI adoption, CX governance, and service transformation. He holds the Certified Customer Experience Professional designation from the Customer Experience Professionals Association (CXPA).</p>
+          <p class="prose">In early 2026, Akos conducted an independent consumer research study on AI adoption in customer support, surveying 104 respondents across Canada and the United States. The findings form the empirical foundation of the GenAI Triage Workshop and the Prioritization Matrix framework.</p>
+          <p class="prose">He presented the research and framework at CX Leaders Advance 2026 in Toronto, a senior-level gathering of CX professionals hosted by the CXPA.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="two-col">
+        <div>
+          <h3 class="s-h3">Research Credentials</h3>
+          <p class="prose">Independent consumer survey, n=104 · Canada 54%, US 37% · Ages 35–54: 73% · Bachelor's or higher: 85% · AI Adopters (daily/weekly): 72% of sample · February–March 2026.</p>
+        </div>
+        <div>
+          <h3 class="s-h3">Areas of Focus</h3>
+          <p class="prose">GenAI governance in CX · AI adoption strategy · Compliance-led deployment frameworks · Customer trust and AI tolerance · CX programme design and leadership.</p>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <span>GenAI Triage Workshop · Proposal for <span data-field="company" data-default="[Company]">[Company]</span></span>
+        <span>Confidential · <span data-field="proposal_date" data-default="[Date]">[Date]</span></span>
+      </div>
+    </div>
+
+    <!-- PAGE 8: NEXT STEPS -->
+    <div class="page">
+      <span class="s-label">Next Steps</span>
+      <h2 class="s-h2">How to<br><em>Move Forward</em></h2>
+
+      <div class="nxt-step">
+        <div class="nxt-num">01</div>
+        <div class="nxt-content">
+          <h4>Reply to confirm your interest</h4>
+          <p>Respond to this proposal to indicate you would like to proceed, or to discuss any questions. A 30-minute call can confirm scope, date, and logistics before any paperwork is signed.</p>
+        </div>
+      </div>
+      <div class="nxt-step">
+        <div class="nxt-num">02</div>
+        <div class="nxt-content">
+          <h4>Complete the pre-session questionnaire</h4>
+          <p>Once confirmed, you will receive a short questionnaire to map your team's current GenAI initiatives, known blockers, and key internal stakeholders. This shapes the facilitation and ensures the session is built around where your organisation actually is.</p>
+        </div>
+      </div>
+      <div class="nxt-step">
+        <div class="nxt-num">03</div>
+        <div class="nxt-content">
+          <h4>Workshop day</h4>
+          <p>Your team arrives with initiatives. The framework provides the structure. You leave with a scored roadmap, shared language, and a clear path to your next decision checkpoint.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="two-col" style="margin-bottom:30px;">
+        <div>
+          <h3 class="s-h3">This proposal is valid until</h3>
+          <p style="font-family:'Raleway',sans-serif;font-weight:800;font-size:22px;color:var(--p);margin-top:4px;" class="fv" data-field="valid_until" data-default="[Valid Until]">[Valid Until]</p>
+          <p class="prose" style="margin-top:6px;font-size:12px;">After this date, pricing and availability are subject to change.</p>
+        </div>
+        <div>
+          <h3 class="s-h3">Questions</h3>
+          <p class="prose" style="margin-bottom:6px;">Reach out via LinkedIn or book a 30-minute conversation directly.</p>
+          <p style="font-size:13px;margin-bottom:3px;"><a href="https://linkedin.com/in/akostolnai" style="color:var(--p);">linkedin.com/in/akostolnai</a></p>
+          <p style="font-size:13px;"><a href="https://l.abilitymatrix.com/Akos30" style="color:var(--o);">Book a 30-min call →</a></p>
+        </div>
+      </div>
+
+      <div class="sig-block">
+        <div>
+          <div class="sig-label">Accepted on behalf of <span data-field="company" data-default="[Company]">[Company]</span></div>
+          <div class="sig-line"></div>
+          <div class="sig-name"><span data-field="contact_name" data-default="[Name]">[Name]</span></div>
+          <div class="sig-title"><span data-field="contact_title" data-default="[Title]">[Title]</span></div>
+        </div>
+        <div>
+          <div class="sig-label">Submitted by</div>
+          <div class="sig-line"></div>
+          <div class="sig-name">Akos Tolnai, CCXP</div>
+          <div class="sig-title">Workshop Facilitator &nbsp;·&nbsp; <span data-field="proposal_date" data-default="[Date]">[Date]</span></div>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <span>GenAI Triage Workshop · Proposal for <span data-field="company" data-default="[Company]">[Company]</span></span>
+        <span>Confidential · <span data-field="proposal_date" data-default="[Date]">[Date]</span></span>
+      </div>
+    </div>
+
+  </div><!-- end proposal-area -->
+</div><!-- end app -->
+
+<script>
+  // ── Auto-initialize dates ──
+  function fmtDate(d) {
+    return d.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+  const today = new Date();
+  const in30  = new Date(); in30.setDate(in30.getDate() + 30);
+  const dateInp  = document.getElementById('inp-date');
+  const validInp = document.getElementById('inp-valid');
+  dateInp.placeholder  = fmtDate(today);
+  validInp.placeholder = fmtDate(in30);
+
+  // ── Field binding ──
+  document.querySelectorAll('[data-input]').forEach(input => {
+    const name = input.dataset.input;
+    const isTextarea = input.tagName === 'TEXTAREA';
+    const isSelect   = input.tagName === 'SELECT';
+
+    function getVal() {
+      if (isSelect) return input.value;
+      return input.value.trim();
+    }
+    function getDisplay() {
+      const v = getVal();
+      if (v) return v;
+      return isSelect ? input.options[0].value : (input.placeholder || '');
+    }
+
+    function update() {
+      const raw     = getVal();
+      const display = getDisplay();
+      document.querySelectorAll('[data-field="' + name + '"]').forEach(el => {
+        if (isTextarea) {
+          const safe = (raw || el.dataset.default || '')
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/\n/g, '<br>');
+          el.innerHTML = safe;
+        } else {
+          el.textContent = display;
+        }
+        el.classList.toggle('empty', !raw);
+      });
+    }
+
+    input.addEventListener('input',  update);
+    input.addEventListener('change', update);
+    update(); // initialize on load
+  });
+</script>
+</body>
+</html>
