@@ -114,6 +114,51 @@
     }
     .hero-scroll::before { content: ''; display: block; width: 28px; height: 1px; background: var(--muted); }
 
+    /* ── ROADMAP ── */
+    .roadmap {
+      background: var(--pxl);
+      padding: clamp(36px, 5vh, 52px) clamp(24px, 8vw, 140px);
+      border-bottom: 1px solid var(--border);
+    }
+    .roadmap-label {
+      font-family: 'Raleway', sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: var(--o); margin-bottom: 20px;
+    }
+    .roadmap-steps {
+      display: flex; align-items: flex-start; gap: 0;
+      overflow-x: auto; padding-bottom: 4px;
+    }
+    .roadmap-step {
+      display: flex; flex-direction: column; align-items: center;
+      flex: 1; min-width: 120px; position: relative;
+    }
+    .roadmap-step + .roadmap-step::before {
+      content: '';
+      position: absolute; top: 16px; left: -50%;
+      width: 100%; height: 2px;
+      background: linear-gradient(to right, var(--pl), var(--pl));
+      z-index: 0;
+    }
+    .roadmap-dot {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--p); color: var(--w);
+      font-family: 'Raleway', sans-serif; font-size: 12px; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 1; flex-shrink: 0;
+      margin-bottom: 10px;
+    }
+    .roadmap-act { font-size: 10px; font-weight: 700; color: var(--pm); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; text-align: center; }
+    .roadmap-title { font-family: 'Raleway', sans-serif; font-size: clamp(11px, 1.1vw, 13px); font-weight: 700; color: var(--p); text-align: center; line-height: 1.3; padding: 0 8px; }
+    .roadmap-desc { font-size: 11px; color: var(--muted); text-align: center; line-height: 1.4; padding: 4px 8px 0; }
+    @media (max-width: 640px) {
+      .roadmap-steps { flex-direction: column; gap: 16px; align-items: flex-start; }
+      .roadmap-step { flex-direction: row; align-items: flex-start; gap: 14px; min-width: unset; }
+      .roadmap-step + .roadmap-step::before { display: none; }
+      .roadmap-dot { margin-bottom: 0; flex-shrink: 0; }
+      .roadmap-act, .roadmap-title, .roadmap-desc { text-align: left; padding: 0; }
+    }
+
     /* ── ACT BANNERS ── */
     .act-banner {
       background: var(--p);
@@ -682,6 +727,43 @@
   <div class="hero-scroll">Scroll to read the full story</div>
 </section>
 
+
+<!-- ══ ROADMAP ══ -->
+<nav class="roadmap" aria-label="Story outline">
+  <div class="roadmap-label reveal">The story in five acts</div>
+  <div class="roadmap-steps">
+    <div class="roadmap-step reveal d1">
+      <div class="roadmap-dot">01</div>
+      <div class="roadmap-act">Act 1</div>
+      <div class="roadmap-title">The Pressure Is Real</div>
+      <div class="roadmap-desc">The mandate, the customer context, and what the data told us before we built anything</div>
+    </div>
+    <div class="roadmap-step reveal d2">
+      <div class="roadmap-dot">02</div>
+      <div class="roadmap-act">Act 2</div>
+      <div class="roadmap-title">The Real Paradox</div>
+      <div class="roadmap-desc">The old forced choice is gone. Customers want fast and accurate simultaneously</div>
+    </div>
+    <div class="roadmap-step reveal d3">
+      <div class="roadmap-dot">03</div>
+      <div class="roadmap-act">Act 3</div>
+      <div class="roadmap-title">The Risk of Getting It Wrong</div>
+      <div class="roadmap-desc">Real cases. Real liability. And what your customers actually think about imperfect AI</div>
+    </div>
+    <div class="roadmap-step reveal d4">
+      <div class="roadmap-dot">04</div>
+      <div class="roadmap-act">Act 4</div>
+      <div class="roadmap-title">The Navigator's Framework</div>
+      <div class="roadmap-desc">Score before you build. A two-axis matrix that gives your team a shared language</div>
+    </div>
+    <div class="roadmap-step reveal d5">
+      <div class="roadmap-dot">05</div>
+      <div class="roadmap-act">Act 5</div>
+      <div class="roadmap-title">Three Tactical Plays</div>
+      <div class="roadmap-desc">Internal first, opt-in sandbox, structured content. A risk-managed path forward</div>
+    </div>
+  </div>
+</nav>
 
 <!-- ══ ACT 1 ══ -->
 <section class="act-banner">
