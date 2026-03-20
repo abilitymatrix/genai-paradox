@@ -255,6 +255,10 @@
     }
     .btn-white:hover { opacity: 0.9; }
 
+    /* ── RIGHT COLUMN OFFSET (mirrors landing page tension card fix) ── */
+    .right-offset { padding-top: clamp(80px,14vh,144px); }
+    @media (max-width:780px) { .right-offset { padding-top: 0; } }
+
     /* ── FOOTER ── */
     .footer {
       background: var(--dark); padding: 22px clamp(24px, 5vw, 80px);
@@ -301,7 +305,7 @@
   <div class="hero-right-bar"></div>
   <div class="hero-inner">
     <div class="hero-text">
-      <div class="hero-eyebrow reveal">Facilitated Workshop · Half-Day · For CX Leadership Teams</div>
+      <div class="hero-eyebrow reveal">Facilitated Workshop · Half-Day · For Leadership Teams</div>
       <h1 class="reveal d1">Your team leaves with<br>a GenAI roadmap<br><em>compliance can sign off on.</em></h1>
       <p class="hero-sub reveal d2">Not a framework you read about. One you've run your organisation's own initiatives through, scored against real customer risk data, and prioritised with your leadership team in the room.</p>
       <a href="https://l.abilitymatrix.com/Akos30" target="_blank" rel="noopener" class="hero-cta reveal d3">Book a 30-minute call</a>
@@ -327,7 +331,7 @@
           <p>Reading about a framework is not the same as applying it to your organisation. The workshop is the application layer.</p>
         </div>
       </div>
-      <div class="reveal d2" style="padding-top:clamp(16px,4vh,48px);">
+      <div class="reveal d2 right-offset">
         <div style="background:var(--w);border-radius:14px;padding:28px;border:1.5px solid var(--border);">
           <div style="font-family:'Raleway',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--pm);margin-bottom:20px;">What most teams are working without</div>
           <div class="missing-list">
@@ -361,7 +365,7 @@
       <div>
         <span class="section-label reveal">The Framework</span>
         <h2 class="reveal d1">Score before you build.<br><em>Plot before you commit.</em></h2>
-        <p class="prose reveal d2">The GenAI Triage Workshop is built around a two-axis prioritisation matrix developed for CX leadership teams. Every GenAI initiative your organisation is considering gets scored against three risk factors, then plotted on the matrix. The quadrant it lands in tells you the right posture.</p>
+        <p class="prose reveal d2">The GenAI Triage Workshop is built around a two-axis prioritisation matrix developed for leadership teams. Every GenAI initiative your organisation is considering gets scored against three risk factors, then plotted on the matrix. The quadrant it lands in tells you the right posture.</p>
         <p class="prose reveal d3">The three scoring factors: the customer's emotional state at the point of contact, your audience's actual AI tolerance, and your compliance burden. Score first. Plot after. The order matters.</p>
         <div class="insight reveal d4">
           <p>The framework was built before the consumer data came in. The research calibrates the scores to what your customers actually expect — not what vendors assume they will accept.</p>
@@ -370,7 +374,7 @@
           <a href="/genai-paradox/" class="btn outline">Read the full research</a>
         </div>
       </div>
-      <div class="reveal d2" style="padding-top:clamp(16px,4vh,48px);">
+      <div class="reveal d2 right-offset">
         <div class="mini-matrix">
           <div class="mini-matrix-y"><span>CX Impact →</span></div>
           <div class="mcell-mini g" style="grid-row:1;grid-column:2;">
@@ -418,7 +422,7 @@
           <div class="format-num">02</div>
           <div>
             <div class="format-title">Score each initiative</div>
-            <div class="format-body">Working as a leadership team, you run each initiative through the three-factor Risk Scorecard. This is where the hard conversations happen and where hidden assumptions surface. Facilitated, structured, and time-boxed.</div>
+            <div class="format-body">Working through each initiative together, you run it through the three-factor Risk Scorecard. This is where the hard conversations happen and where hidden assumptions surface. Facilitated, structured, and time-boxed.</div>
           </div>
         </div>
         <div class="format-step">
@@ -436,7 +440,7 @@
           </div>
         </div>
       </div>
-      <div class="reveal d3">
+      <div class="reveal d3 right-offset">
         <div class="session-card">
           <div class="session-card-label">Session details</div>
           <div class="session-detail">
@@ -449,8 +453,8 @@
           <div class="session-detail">
             <span class="session-icon">👥</span>
             <div>
-              <div class="session-dt">Leadership team</div>
-              <div class="session-dd">Up to 12 participants. Works best with CX, digital, legal, and compliance in the room together</div>
+              <div class="session-dt">Up to 6 participants per group</div>
+              <div class="session-dd">Works best with CX, digital, legal, and compliance in the room together. For larger teams, groups of 6 run the session in parallel and compare outputs at the end</div>
             </div>
           </div>
           <div class="session-detail">
@@ -572,7 +576,7 @@
           <a href="https://linkedin.com/in/akostolnai" target="_blank" rel="noopener" style="color:var(--p);font-weight:600;font-size:14px;text-decoration:underline;text-underline-offset:3px;">linkedin.com/in/akostolnai</a>
         </div>
       </div>
-      <div class="reveal d2" style="padding-top:clamp(0px,2vh,24px);">
+      <div class="reveal d2 right-offset">
         <div class="cred-card">
           <div class="cred-label">Credentials</div>
           <div class="cred-item">
