@@ -458,6 +458,77 @@
     .reveal.d5 { transition-delay: 0.5s; }
     .reveal.from-r { transform: translateX(28px); }
     .reveal.from-r.visible { transform: none; }
+
+    /* ── RISK CARDS (Act 3) ── */
+    .risk-cards { display:flex; flex-direction:column; gap:10px; margin-top:32px; }
+    .risk-card {
+      background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2);
+      border-radius:12px; overflow:hidden;
+    }
+    .risk-card summary {
+      list-style:none; cursor:pointer;
+      display:flex; align-items:center; gap:16px;
+      padding:18px 22px; transition:background 0.2s;
+    }
+    .risk-card summary:hover { background:rgba(255,255,255,0.06); }
+    .risk-card summary::-webkit-details-marker { display:none; }
+    .risk-card-graphic {
+      width:54px; height:54px; border-radius:10px; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center; font-size:28px;
+    }
+    .risk-card-graphic.warn { background:rgba(232,96,44,0.25); }
+    .risk-card-graphic.news { background:rgba(255,255,255,0.1); }
+    .risk-card-graphic.law  { background:rgba(197,179,230,0.2); }
+    .risk-card-info { flex:1; }
+    .risk-card-title { font-family:'Raleway',sans-serif; font-size:16px; font-weight:700; color:var(--w); }
+    .risk-card-tag { font-size:12px; color:var(--pl); margin-top:3px; }
+    .risk-card-chevron { font-size:20px; color:var(--pl); font-weight:300; transition:transform 0.25s; line-height:1; }
+    .risk-card[open] .risk-card-chevron { transform:rotate(45deg); }
+    .risk-card-body { padding:14px 22px 20px calc(54px + 38px); border-top:1px solid rgba(255,255,255,0.1); }
+    .risk-case-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--o); margin-bottom:8px; }
+    .risk-card-body p { font-size:14px; color:rgba(255,255,255,0.65); line-height:1.7; margin:0; }
+    @media(max-width:600px) { .risk-card-body { padding-left:22px; } }
+
+    /* ── TENSION VISUAL (Act 1 Mandate) ── */
+    .tension-pair { display:flex; flex-direction:column; gap:10px; }
+    .tension-card { border-radius:12px; padding:20px 22px; display:flex; gap:14px; align-items:flex-start; }
+    .tension-card.push { background:#FFF3EE; border:2px solid var(--o); }
+    .tension-card.hold { background:var(--pxl); border:2px solid var(--p); }
+    .tension-icon { font-size:28px; flex-shrink:0; line-height:1; margin-top:2px; }
+    .tension-title { font-family:'Raleway',sans-serif; font-size:14px; font-weight:800; margin-bottom:4px; }
+    .tension-card.push .tension-title { color:var(--o); }
+    .tension-card.hold .tension-title { color:var(--p); }
+    .tension-body { font-size:13px; color:var(--muted); line-height:1.55; }
+    .tension-divider { text-align:center; font-family:'Raleway',sans-serif; font-size:22px; font-weight:900; color:var(--pl); padding:4px 0; }
+
+    /* ── 94% STAT BANNER ── */
+    .stat-banner {
+      background:var(--dark);
+      padding:clamp(80px,12vh,130px) clamp(24px,8vw,140px);
+      text-align:center; position:relative; overflow:hidden;
+    }
+    .stat-banner-bg {
+      position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+      font-family:'Raleway',sans-serif; font-weight:900;
+      font-size:clamp(140px,24vw,280px); color:rgba(255,255,255,0.03);
+      line-height:1; pointer-events:none; user-select:none; white-space:nowrap;
+    }
+    .stat-banner-num {
+      font-family:'Raleway',sans-serif; font-weight:900;
+      font-size:clamp(100px,17vw,200px); color:var(--o);
+      line-height:1; display:block; position:relative; z-index:1;
+    }
+    .stat-banner-label {
+      font-size:clamp(18px,2.4vw,28px); color:var(--w);
+      max-width:660px; margin:20px auto 0; line-height:1.5;
+      position:relative; z-index:1;
+      font-family:'Raleway',sans-serif; font-weight:300;
+    }
+    .stat-banner-sub {
+      font-size:clamp(13px,1.3vw,15px); color:rgba(255,255,255,0.4);
+      max-width:500px; margin:14px auto 0; line-height:1.7;
+      position:relative; z-index:1;
+    }
   </style>
 </head>
 <body>
@@ -512,18 +583,17 @@
   <p class="act-sub reveal d2">The pressure to deploy GenAI is no longer a suggestion. It's a mandate. But before we get to the framework, let me tell you what the data said. Because it changed the story entirely.</p>
 </section>
 
-<!-- SECTION: Hypothesis -->
+<!-- SECTION: The Premise -->
 <section class="section">
   <div class="container">
     <div class="two-col">
       <div>
-        <span class="section-label reveal">The Starting Premise</span>
-        <h3 class="reveal d1">Your CEO isn't asking.<br>They're telling.</h3>
-        <p class="prose reveal d2">Let's be honest. Your CEO, your board, your competitors: everyone is telling you to implement GenAI, and to do it yesterday. This isn't a technology conversation anymore. It's a strategic mandate with a deadline.</p>
-        <p class="prose reveal d3">And the reason is simple: the world your customers live in has fundamentally changed. They carry powerful AI in their pocket. They use it every day to summarise documents, answer complex questions, plan travel in seconds. And they're starting to wonder why your support channel doesn't feel anything like it.</p>
-        <p class="prose reveal d4">Before building any framework, I wanted to understand what customers <em>actually</em> think. So I ran a survey — <strong>104 responses</strong>, Canada and the US, skewing toward educated, connected, professional consumers. The kind of customers many of you serve. I went in with a clear hypothesis. The data told me I was wrong.</p>
-        <div class="survey-note reveal d5">
-          <strong>Survey sample:</strong> n=104 · Canada 54%, US 37% · Ages 35–54: 73% · Bachelor's or higher: 85% · AI Adopters (daily/weekly): 72% of sample
+        <span class="section-label reveal">The Premise</span>
+        <h3 class="reveal d1">Your customers already<br>live in an AI world.</h3>
+        <p class="prose reveal d2">The world your customers live in has fundamentally changed. They carry powerful AI in their pocket. They use it every day to summarise documents, answer complex questions, plan travel in seconds. And they're starting to wonder why your support channel doesn't feel anything like it.</p>
+        <p class="prose reveal d3">Going into this research, we assumed that customers who use AI daily had been rewired to accept a trade-off: a good-enough, fast answer over a perfect one. Speed was winning the preference war. Or so we thought.</p>
+        <div class="insight reveal d4">
+          <p><strong>Hypothesis:</strong> Daily AI use had rewired customers to prefer speed. "80% right, right now" would beat "100% right, eventually."</p>
         </div>
       </div>
       <div class="reveal d2 from-r">
@@ -546,6 +616,55 @@
           <p class="hyp-note">Daily AI use had rewired customers to accept<br>"80% good, right now." Or so we assumed.</p>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: The Mandate -->
+<section class="section" style="background:var(--pxl);padding-top:clamp(72px,10vh,110px);">
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <span class="section-label reveal">The Mandate</span>
+        <h3 class="reveal d1">Your CEO isn't asking.<br>They're telling.</h3>
+        <p class="prose reveal d2">Your CEO, your board, your competitors: everyone is telling you to implement GenAI, and to do it yesterday. This isn't a technology conversation anymore. It's a strategic mandate with a deadline.</p>
+        <p class="prose reveal d3">Every board deck has a GenAI slide. Every analyst report says your competitors are moving. And the message to leaders is clear: figure it out fast, and don't end up in the news in the process.</p>
+        <div class="insight orange reveal d4">
+          <p>The pressure to move fast and the need to move carefully are not sequential problems. They arrive in your inbox at the same time. That is the paradox.</p>
+        </div>
+      </div>
+      <div class="reveal d2 from-r">
+        <div class="tension-pair">
+          <div class="tension-card push">
+            <div class="tension-icon">🚀</div>
+            <div>
+              <div class="tension-title">The Board: Move Now</div>
+              <div class="tension-body">Competitors are shipping. Investors are watching. Customer expectations are already set by consumer AI. Delay is a strategic choice with strategic consequences.</div>
+            </div>
+          </div>
+          <div class="tension-divider">vs</div>
+          <div class="tension-card hold">
+            <div class="tension-icon">🛡️</div>
+            <div>
+              <div class="tension-title">Compliance: Not So Fast</div>
+              <div class="tension-body">Hallucinations are real. Regulatory exposure is real. In finance, healthcare, or any regulated vertical, a wrong AI answer isn't a service failure. It's a liability event.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: The Research -->
+<section class="section">
+  <div class="container">
+    <span class="section-label reveal">The Evidence Base</span>
+    <h3 class="reveal d1">What do your customers<br><em>actually</em> want?</h3>
+    <p class="prose reveal d2" style="max-width:720px;">To build a framework worth trusting, it needs to be anchored in real consumer data. Before presenting the matrix, I ran an independent survey across Canada and the United States: <strong>104 responses</strong>, weighted toward educated, professionally active adults. The kind of customers many of you serve.</p>
+    <p class="prose reveal d3" style="max-width:720px;">One important framing point: this data tells you what consumers <em>want</em>. That is a critical input for scoring risk honestly. But what works for consumers in general does not override your industry's compliance reality. A financial services firm and a quick-service restaurant face entirely different accountability structures. The scoring framework stays the same. The data helps you calibrate where your customers actually sit on the tolerance scale.</p>
+    <div class="survey-note reveal d4">
+      <strong>Survey sample:</strong> n=104 · Canada 54%, US 37% · Ages 35–54: 73% · Bachelor's or higher: 85% · AI Adopters (daily/weekly): 72% of sample
     </div>
   </div>
 </section>
@@ -602,9 +721,9 @@
       <div>
         <span class="section-label reveal">The New Standard</span>
         <h3 class="reveal d1">Fast AND accurate.<br><em>Not one or the other.</em></h3>
-        <p class="prose reveal d2">Here's what the data is really telling us. Customers haven't lowered their accuracy standards. But they have been shown, by the AI in their pocket, that speed is no longer a trade-off. You can have both. And now they expect that from you.</p>
-        <p class="prose reveal d3">The old forced choice is gone. They don't want fast <em>or</em> accurate. They want fast <em>and</em> accurate. If you can't deliver that, they are done with you. And they have an alternative that will.</p>
-        <p class="prose reveal d4">The "dumb bot" isn't just unhelpful anymore. In a world where ChatGPT gives a thoughtful, contextual answer in two seconds, a menu of scripted options is an insult to your customer's intelligence.</p>
+        <p class="prose reveal d2">For decades, companies faced a genuine constraint: you could either deploy a fast automated system (scripted menus, IVR trees, keyword bots, available 24/7 but essentially dumb) or route customers to a trained human agent (slow, expensive, but accurate). There was no third option. This was the forced choice. Everyone accepted it as structural.</p>
+        <p class="prose reveal d3">GenAI changed the constraint. For the first time, a system can be genuinely fast <em>and</em> genuinely intelligent. The forced choice is technically no longer necessary. But here is the problem: your customers already know this, because they have ChatGPT in their pocket. They've experienced the third option. And now they expect it from you.</p>
+        <p class="prose reveal d4">The "dumb bot" isn't just unhelpful anymore. In a world where a thoughtful, contextual answer takes two seconds, a menu of scripted options is an insult to your customer's intelligence. 83% of our respondents confirmed exactly that.</p>
         <div class="stat-pair reveal d5" style="margin-top:28px;">
           <div class="stat-block orange">
             <span class="stat-num o" style="font-size:clamp(44px,6.5vw,80px);" data-count="83">0%</span>
@@ -636,12 +755,17 @@
             <div class="bar-track"><div class="bar-fill gr" data-width="2" style="min-width:42px;"><span class="bar-val">2%</span></div></div>
           </div>
         </div>
-        <div class="insight orange" style="margin-top:24px;">
-          <p><strong>94% of AI Adopters</strong> already use personal AI to research their problem <em>before</em> contacting support. They're not waiting for your bot — they're bypassing it entirely.</p>
-        </div>
       </div>
     </div>
   </div>
+</section>
+
+<!-- 94% STAT SECTION -->
+<section class="stat-banner">
+  <div class="stat-banner-bg" aria-hidden="true">94%</div>
+  <span class="stat-banner-num reveal" data-count="94">0%</span>
+  <p class="stat-banner-label reveal d1">of AI Adopters already use personal AI to research their problem <strong>before</strong> contacting support.</p>
+  <p class="stat-banner-sub reveal d2">They are not waiting for your bot. They are bypassing it entirely. They arrive at your support channel already armed with context, already expecting a human-grade answer.</p>
 </section>
 
 <!-- PULL QUOTE -->
@@ -660,12 +784,51 @@
 <!-- ══ ACT 3 ══ -->
 <section class="act-banner">
   <div class="act-banner-num" aria-hidden="true">03</div>
-  <div class="act-label reveal">Act 3 · The Terror of Getting It Wrong</div>
+  <div class="act-label reveal">Act 3 · The Risk of Getting It Wrong</div>
   <h2 class="reveal d1">"How do we do this<br>without ending up<br><span class="accent">on the news?"</span></h2>
-  <div class="act-pills reveal d2">
-    <div class="act-pill"><span class="act-pill-icon">⚠️</span><span class="act-pill-label">Loss of Control</span></div>
-    <div class="act-pill"><span class="act-pill-icon">📰</span><span class="act-pill-label">Brand &amp; Reputation Damage</span></div>
-    <div class="act-pill"><span class="act-pill-icon">⚖️</span><span class="act-pill-label">Regulatory &amp; Legal Exposure</span></div>
+  <div class="risk-cards reveal d2" style="max-width:700px;">
+    <details class="risk-card">
+      <summary>
+        <div class="risk-card-graphic warn">⚠️</div>
+        <div class="risk-card-info">
+          <div class="risk-card-title">Loss of Control</div>
+          <div class="risk-card-tag">Tap to see a real case</div>
+        </div>
+        <div class="risk-card-chevron">+</div>
+      </summary>
+      <div class="risk-card-body">
+        <div class="risk-case-label">Air Canada · 2024</div>
+        <p>Air Canada's support chatbot told a grieving customer that a bereavement fare discount applied to already-purchased tickets. The policy didn't exist. The customer relied on it. Air Canada argued in court that it wasn't responsible for what its chatbot said. The court disagreed. Air Canada was held fully liable. First ruling of its kind: you own what your bot says.</p>
+      </div>
+    </details>
+    <details class="risk-card">
+      <summary>
+        <div class="risk-card-graphic news">📰</div>
+        <div class="risk-card-info">
+          <div class="risk-card-title">Brand &amp; Reputation Damage</div>
+          <div class="risk-card-tag">Tap to see a real case</div>
+        </div>
+        <div class="risk-card-chevron">+</div>
+      </summary>
+      <div class="risk-card-body">
+        <div class="risk-case-label">DPD · United Kingdom · 2024</div>
+        <p>A customer convinced DPD's branded AI support agent to write a poem criticising the company and to describe itself as useless. Screenshots went viral across social media. The bot said it on DPD's own platform, in DPD's support channel, under DPD's name. No warning. No override. The company had no control over what it said once the conversation went off-script.</p>
+      </div>
+    </details>
+    <details class="risk-card">
+      <summary>
+        <div class="risk-card-graphic law">⚖️</div>
+        <div class="risk-card-info">
+          <div class="risk-card-title">Regulatory &amp; Legal Exposure</div>
+          <div class="risk-card-tag">Tap to see a real case</div>
+        </div>
+        <div class="risk-card-chevron">+</div>
+      </summary>
+      <div class="risk-card-body">
+        <div class="risk-case-label">New York City MyCity AI · 2024</div>
+        <p>New York City launched an official AI assistant for businesses, built on city-provided information. The chatbot told small business owners to take actions that violated local employment law. Not vendor error, not a third-party tool: the City's own official AI, giving legally incorrect guidance to the people it was built to help. The city had to publicly retract the guidance and suspend the service.</p>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -676,9 +839,9 @@
       <div>
         <span class="section-label reveal">The Leader's Dilemma</span>
         <h3 class="reveal d1">Accountable for a black box<br>we can't fully explain.</h3>
-        <p class="prose reveal d2">We know we have to act. But here's what every CX leader is quietly terrified of. GenAI can hallucinate. It can go off-brand. In a regulated industry, a wrong answer from your AI support agent isn't just a bad customer experience. It's a liability your legal team will be managing for months.</p>
+        <p class="prose reveal d2">We know we have to act. But here's what every leader quietly wrestles with. GenAI can hallucinate. It can go off-brand. In a regulated industry, a wrong answer from your AI support agent isn't just a bad customer experience. It's a liability your legal team will be managing for months.</p>
         <p class="prose reveal d3">The hardest part? Your CEO is asking you to be accountable for the outputs of a technology that not even the people who built it can fully explain. That's not a technology problem. It's a governance problem. And it lands in your inbox.</p>
-        <p class="prose reveal d4">Our survey gave us a precise picture of where trust breaks down with customers — and the data is important for anyone building an internal business case.</p>
+        <p class="prose reveal d4">Our survey gave us a precise picture of where trust breaks down with customers, and the data matters for anyone building an internal business case.</p>
         <div class="insight reveal d5">
           <p>Customers who love AI personally apply a much stricter standard when a company is handling their problem. Personal AI use does not equal institutional trust in AI.</p>
         </div>
@@ -899,7 +1062,7 @@
         <img src="https://api.qrserver.com/v1/create-qr-code/?size=312x312&data=https%3A%2F%2Flinkedin.com%2Fin%2Fakostolnai&format=svg&margin=0" alt="Scan to connect on LinkedIn" width="156" height="156">
       </div>
       <div class="connect-name">Akos Tolnai, CCXP</div>
-      <div class="connect-link">linkedin.com/in/akostolnai</div>
+      <div class="connect-link"><a href="https://linkedin.com/in/akostolnai" target="_blank" rel="noopener" style="color:var(--pl);text-decoration:underline;text-underline-offset:3px;">linkedin.com/in/akostolnai</a></div>
       <div class="connect-note">Scan to connect on LinkedIn</div>
     </div>
   </div>
