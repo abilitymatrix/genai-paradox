@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navigating the GenAI Paradox | Akos Tolnai, CCXP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --p:     #4E2A84;
+      --pm:    #7255A3;
+      --pl:    #C5B3E6;
+      --pxl:   #F0EBF9;
+      --o:     #E8602C;
+      --w:     #FFFFFF;
+      --dark:  #1A1A2E;
+      --muted: #5A5A72;
+      --green: #2D8A4E;
+      --red:   #C0392B;
+      --amber: #D4851A;
+      --grey:  #6B7280;
+      --border:#E8E0F5;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--dark);
+      background: var(--w);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 5vw, 80px);
+    }
+
+    /* ── TOPNAV ── */
+    .topnav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 clamp(24px, 5vw, 60px);
+      height: 58px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: transform 0.3s ease;
+    }
+    .topnav-logo { display: flex; align-items: center; gap: 10px; }
+    .topnav-logo .brand { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 17px; color: var(--p); letter-spacing: 1px; }
+    .topnav-logo .brand sup { font-size: 9px; }
+    .topnav-event { font-family: 'Raleway', sans-serif; font-size: 12px; font-weight: 600; color: var(--pm); }
+    .topnav-event .accent { color: var(--o); }
+    @media (max-width: 600px) { .topnav-event { display: none; } }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--w);
+      display: flex; flex-direction: column;
+      position: relative;
+      padding-top: 58px;
+      overflow: hidden;
+    }
+    .hero-inner {
+      flex: 1;
+      display: flex; align-items: center;
+      padding: clamp(60px, 8vh, 120px) clamp(24px, 8vw, 140px) clamp(40px, 5vh, 60px);
+      position: relative; z-index: 1;
+    }
+    .hero-text { max-width: 760px; }
+    .hero-eyebrow {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(10px, 1.2vw, 12px);
+      font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--o); margin-bottom: clamp(16px, 2vw, 28px);
+    }
+    .hero h1 {
+      font-family: 'Raleway', sans-serif; font-weight: 900;
+      font-size: clamp(40px, 6vw, 86px);
+      line-height: 1.05; color: var(--p);
+      letter-spacing: -1px; margin-bottom: clamp(16px, 2vw, 24px);
+    }
+    .hero h1 em { font-style: normal; color: var(--o); }
+    .hero-sub {
+      font-size: clamp(16px, 1.8vw, 21px); color: var(--muted);
+      line-height: 1.55; margin-bottom: clamp(28px, 4vw, 48px);
+      max-width: 540px;
+    }
+    .hero-divider { width: 56px; height: 4px; background: var(--o); margin-bottom: clamp(20px, 3vw, 32px); }
+    .hero-intro {
+      font-size: clamp(15px, 1.4vw, 17px); color: var(--muted);
+      line-height: 1.8; margin-bottom: clamp(20px, 3vw, 32px);
+      max-width: 640px;
+    }
+    .hero-speaker { font-family: 'Raleway', sans-serif; font-size: clamp(16px, 1.8vw, 20px); font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+    .hero-event { font-size: clamp(13px, 1.3vw, 15px); color: var(--muted); margin-bottom: 3px; }
+    .hero-deco {
+      position: absolute; right: -40px; top: 50%; transform: translateY(-50%);
+      opacity: 0.05; pointer-events: none;
+    }
+    .hero-right-bar {
+      position: absolute; right: 0; top: 0; bottom: 0; width: 10px;
+      background: linear-gradient(to bottom, var(--pl), var(--p));
+    }
+    .hero-scroll {
+      padding: 20px clamp(24px, 8vw, 140px);
+      font-size: 12px; color: var(--muted); letter-spacing: 2px;
+      display: flex; align-items: center; gap: 12px; text-transform: uppercase;
+    }
+    .hero-scroll::before { content: ''; display: block; width: 28px; height: 1px; background: var(--muted); }
+
+    /* ── ACT BANNERS ── */
+    .act-banner {
+      background: var(--p);
+      padding: clamp(80px, 12vh, 130px) clamp(24px, 8vw, 140px);
+      position: relative; overflow: hidden;
+    }
+    .act-banner-num {
+      position: absolute; right: clamp(24px, 5vw, 80px); top: 50%; transform: translateY(-50%);
+      font-family: 'Raleway', sans-serif; font-weight: 900;
+      font-size: clamp(100px, 18vw, 240px);
+      color: rgba(255,255,255,0.04); line-height: 1;
+      user-select: none; pointer-events: none;
+    }
+    .act-label {
+      font-family: 'Raleway', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 5px; text-transform: uppercase;
+      color: var(--pl); margin-bottom: clamp(14px, 2vw, 24px);
+    }
+    .act-banner h2 {
+      font-family: 'Raleway', sans-serif; font-weight: 900;
+      font-size: clamp(36px, 5.5vw, 76px);
+      color: var(--w); line-height: 1.08;
+      max-width: 800px; margin-bottom: clamp(18px, 2.5vw, 32px);
+    }
+    .act-banner h2 .accent { color: var(--o); }
+    .act-banner .act-sub {
+      font-size: clamp(15px, 1.7vw, 20px); color: var(--pl);
+      line-height: 1.65; max-width: 660px;
+    }
+    .act-pills { display: flex; gap: 14px; margin-top: 32px; flex-wrap: wrap; }
+    .act-pill {
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px; padding: 14px 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .act-pill-icon { font-size: 20px; }
+    .act-pill-label { font-size: 14px; color: var(--w); font-weight: 600; }
+
+    /* ── NARRATIVE SECTIONS ── */
+    .section { padding: clamp(72px, 10vh, 110px) 0; }
+    .section-label {
+      font-family: 'Raleway', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: var(--o); margin-bottom: 14px; display: block;
+    }
+    .section h3 {
+      font-family: 'Raleway', sans-serif; font-weight: 800;
+      font-size: clamp(24px, 3.2vw, 44px);
+      color: var(--p); line-height: 1.15;
+      margin-bottom: clamp(18px, 2.5vw, 32px);
+    }
+    .section h3 em { font-style: normal; color: var(--o); }
+    .prose {
+      font-size: clamp(15px, 1.4vw, 17px); color: var(--muted);
+      line-height: 1.8; margin-bottom: 18px;
+    }
+    .prose:last-child { margin-bottom: 0; }
+    .prose strong { color: var(--dark); font-weight: 600; }
+    .prose em { color: var(--dark); }
+
+    /* two-col */
+    .two-col {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 5vw, 80px); align-items: start;
+    }
+    @media (max-width: 780px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── INSIGHT BOX ── */
+    .insight {
+      background: var(--pxl); border-left: 5px solid var(--p);
+      padding: 18px 22px; border-radius: 0 8px 8px 0; margin-top: 24px;
+    }
+    .insight p { font-size: clamp(14px, 1.3vw, 16px) !important; color: var(--p) !important; font-weight: 500; margin: 0 !important; line-height: 1.6; }
+    .insight.orange { background: #FFF3EE; border-left-color: var(--o); }
+    .insight.orange p { color: var(--dark) !important; }
+
+    /* ── HYPOTHESIS VISUAL ── */
+    .hypothesis-visual {
+      background: var(--pxl); border-radius: 14px;
+      padding: clamp(28px, 4vw, 48px) clamp(20px, 3vw, 36px); text-align: center;
+    }
+    .hyp-label {
+      font-family: 'Raleway', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--pm); margin-bottom: 28px;
+    }
+    .hyp-scale { display: flex; justify-content: center; align-items: flex-end; gap: 24px; margin-bottom: 24px; }
+    .hyp-item { text-align: center; }
+    .hyp-emoji { font-size: 44px; line-height: 1; display: block; margin-bottom: 8px; }
+    .hyp-name { font-family: 'Raleway', sans-serif; font-size: 20px; font-weight: 900; }
+    .hyp-name.o { color: var(--o); }
+    .hyp-name.p { color: var(--p); }
+    .hyp-desc { font-size: 12px; color: var(--muted); margin-top: 3px; }
+    .hyp-badge { display: inline-block; margin-top: 10px; background: var(--o); color: var(--w); font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 2px; letter-spacing: 1px; text-transform: uppercase; }
+    .hyp-scale-icon { font-size: 36px; color: var(--pl); padding-bottom: 14px; }
+    .hyp-item.faded { opacity: 0.3; }
+    .hyp-note { font-size: 13px; color: var(--pm); font-style: italic; }
+
+    /* ── STAT BLOCKS ── */
+    .stat-block {
+      text-align: center; padding: clamp(20px, 3vw, 32px);
+      border-radius: 12px;
+    }
+    .stat-block.purple { background: var(--pxl); border: 2px solid var(--pl); }
+    .stat-block.orange { background: #FFF3EE; border: 2px solid var(--o); }
+    .stat-block.green  { background: #E8F5EE; border: 2px solid var(--green); }
+    .stat-block.red    { background: #FEF0F0; border: 2px solid var(--red); }
+    .stat-block.grey   { background: #F3F4F6; border: 2px solid var(--grey); }
+
+    .stat-num {
+      font-family: 'Raleway', sans-serif; font-weight: 900;
+      font-size: clamp(60px, 8vw, 100px); line-height: 1; display: block;
+    }
+    .stat-num.p  { color: var(--p); }
+    .stat-num.o  { color: var(--o); }
+    .stat-num.g  { color: var(--green); }
+    .stat-num.r  { color: var(--red); }
+    .stat-num.gr { color: var(--grey); }
+
+    .stat-label { font-size: clamp(13px, 1.3vw, 15px); color: var(--muted); line-height: 1.5; margin-top: 10px; }
+    .stat-label strong { color: var(--dark); }
+
+    .stat-pair { display: flex; gap: 14px; }
+    .stat-pair .stat-block { flex: 1; }
+    @media (max-width: 500px) { .stat-pair { flex-direction: column; } }
+
+    .trust-row { display: flex; gap: 12px; margin-bottom: 24px; }
+    .trust-row .stat-block { flex: 1; padding: 18px 10px; }
+    @media (max-width: 480px) { .trust-row { flex-wrap: wrap; } .trust-row .stat-block { flex: 1 1 40%; } }
+    .trust-num {
+      font-family: 'Raleway', sans-serif; font-weight: 900;
+      font-size: clamp(36px, 5vw, 60px); line-height: 1;
+    }
+    .trust-num.g  { color: var(--green); }
+    .trust-num.r  { color: var(--red); }
+    .trust-num.gr { color: var(--grey); }
+    .trust-lbl { font-size: 11px; font-weight: 700; margin-top: 6px; line-height: 1.3; }
+    .trust-lbl.g  { color: var(--green); }
+    .trust-lbl.r  { color: var(--red); }
+    .trust-lbl.gr { color: var(--grey); }
+
+    /* ── DATA TABLE ── */
+    .table-wrap { overflow-x: auto; margin: 28px 0; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: clamp(13px, 1.3vw, 15px); }
+    .data-table th { background: var(--p); color: var(--w); padding: 12px 18px; text-align: left; font-weight: 600; font-size: 13px; }
+    .data-table td { padding: 11px 18px; border-bottom: 1px solid var(--border); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:nth-child(even) td { background: var(--pxl); }
+    .data-table .hl td { font-weight: 700; color: var(--p); background: #EDE0FF; }
+    .data-table .zero { color: var(--o); font-weight: 900; font-size: 18px; }
+
+    /* ── BAR CHARTS ── */
+    .bar-chart { margin: 0; }
+    .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .bar-row:last-child { margin-bottom: 0; }
+    .bar-label { flex: 0 0 clamp(130px, 30%, 220px); font-size: clamp(12px, 1.1vw, 14px); color: var(--dark); line-height: 1.3; }
+    .bar-track { flex: 1; height: 30px; background: var(--border); border-radius: 4px; overflow: hidden; }
+    .bar-fill {
+      height: 100%; border-radius: 4px;
+      display: flex; align-items: center; padding-left: 10px;
+      width: 0%;
+      transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .bar-fill.p  { background: var(--p); }
+    .bar-fill.o  { background: var(--o); }
+    .bar-fill.pm { background: var(--pm); }
+    .bar-fill.gr { background: var(--grey); }
+    .bar-fill.g  { background: var(--green); }
+    .bar-val { font-size: 12px; font-weight: 700; color: var(--w); white-space: nowrap; }
+
+    /* ── SURVEY NOTE ── */
+    .survey-note {
+      background: var(--pxl); border-radius: 8px; padding: 14px 18px;
+      font-size: 13px; color: var(--pm); line-height: 1.6; margin-top: 22px;
+    }
+
+    /* ── PULL QUOTE ── */
+    .pullquote {
+      background: var(--p);
+      padding: clamp(72px, 10vh, 120px) clamp(24px, 8vw, 140px);
+      position: relative; overflow: hidden;
+    }
+    .pullquote-deco {
+      position: absolute; top: 32px; left: clamp(24px, 8vw, 140px);
+      font-family: 'Raleway', sans-serif; font-weight: 900;
+      font-size: clamp(80px, 14vw, 180px);
+      color: rgba(255,255,255,0.05); line-height: 1; pointer-events: none;
+    }
+    .pullquote-text {
+      font-family: 'Raleway', sans-serif; font-weight: 300; font-style: italic;
+      font-size: clamp(20px, 2.8vw, 38px);
+      color: var(--w); line-height: 1.5;
+      max-width: 860px; margin-bottom: 28px;
+      position: relative; z-index: 1;
+    }
+    .pullquote-attr { font-size: 14px; font-weight: 600; color: var(--pl); letter-spacing: 0.5px; }
+    .pullquote-context {
+      margin-top: 32px; background: rgba(255,255,255,0.1);
+      border-radius: 8px; padding: 20px 26px; max-width: 640px;
+    }
+    .pullquote-context p { font-size: clamp(14px, 1.3vw, 16px); color: var(--pl); line-height: 1.65; }
+
+    /* ── SCORECARD ── */
+    .scorecard { background: var(--pxl); border-radius: 12px; padding: clamp(24px, 3vw, 36px); }
+    .scorecard-title {
+      font-family: 'Raleway', sans-serif; font-size: 11px; font-weight: 800;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--p); margin-bottom: 22px;
+    }
+    .score-item { padding: 14px 0; border-bottom: 1px solid var(--pl); display: flex; gap: 14px; }
+    .score-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .score-num { font-family: 'Raleway', sans-serif; font-size: 26px; font-weight: 900; color: var(--pl); line-height: 1; flex-shrink: 0; width: 36px; }
+    .score-q { font-size: 14px; font-weight: 700; color: var(--p); margin-bottom: 4px; }
+    .score-hint { font-size: 13px; color: var(--pm); line-height: 1.5; }
+
+    /* ── MATRIX ── */
+    .matrix-section { padding: clamp(72px, 10vh, 110px) 0; background: var(--pxl); }
+    .matrix-header { text-align: center; margin-bottom: clamp(40px, 5vh, 60px); }
+    .matrix-header h3 { margin-bottom: 10px; }
+    .matrix-header p { font-size: clamp(15px, 1.4vw, 17px); color: var(--muted); max-width: 580px; margin: 0 auto; line-height: 1.7; }
+
+    .matrix-wrap {
+      display: grid; grid-template-columns: 28px 1fr 1fr; grid-template-rows: 1fr 1fr 38px;
+      gap: 8px; height: clamp(300px, 42vh, 500px);
+    }
+    .matrix-y { grid-column: 1; grid-row: 1/3; display: flex; align-items: center; justify-content: center; }
+    .matrix-y span { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 10px; font-weight: 700; color: var(--p); letter-spacing: 2px; text-transform: uppercase; }
+    .mcell {
+      border-radius: 10px; padding: clamp(14px, 2vw, 22px);
+      display: flex; flex-direction: column; justify-content: space-between;
+      opacity: 0; transform: scale(0.92) translateY(12px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .mcell.visible { opacity: 1; transform: scale(1) translateY(0); }
+    .mcell.g  { background: #E8F5EE; border: 2px solid var(--green); }
+    .mcell.a  { background: #FEF9E7; border: 2px solid var(--amber); }
+    .mcell.gr { background: #F3F4F6; border: 2px solid var(--grey); }
+    .mcell.r  { background: #FEF0F0; border: 2px solid var(--red); }
+    .mcell h4 { font-family: 'Raleway', sans-serif; font-size: clamp(13px, 1.4vw, 17px); font-weight: 800; margin-bottom: 4px; }
+    .mcell.g  h4 { color: var(--green); }
+    .mcell.a  h4 { color: var(--amber); }
+    .mcell.gr h4 { color: var(--grey); }
+    .mcell.r  h4 { color: var(--red); }
+    .mcell-mantra { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.65; }
+    .mcell-eg { font-size: clamp(11px, 1.1vw, 13px); color: var(--muted); line-height: 1.4; margin-top: 8px; }
+    .matrix-x { grid-column: 2/4; grid-row: 3; display: flex; justify-content: space-between; align-items: center; padding: 0 6px; }
+    .matrix-x span { font-size: 10px; font-weight: 700; color: var(--p); letter-spacing: 1px; text-transform: uppercase; }
+    .matrix-x .mid { color: var(--pm); }
+
+    /* ── CONTROL CARDS ── */
+    .control-card { border-radius: 10px; padding: 22px 26px; margin-bottom: 14px; }
+    .control-card:last-child { margin-bottom: 0; }
+    .control-card.green { background: #E8F5EE; border: 1px solid var(--green); }
+    .control-card.red   { background: #FEF0F0; border: 1px solid var(--red); }
+    .ctrl-header { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+    .control-card.green .ctrl-header { color: var(--green); }
+    .control-card.red   .ctrl-header { color: var(--red); }
+    .ctrl-item { padding: 8px 0; border-bottom: 1px solid; font-size: 15px; }
+    .control-card.green .ctrl-item { border-bottom-color: #C5E8D0; }
+    .control-card.red   .ctrl-item { border-bottom-color: #F5C5C0; }
+    .ctrl-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+    /* ── CTA SECTION ── */
+    .cta-section { padding: clamp(72px, 10vh, 110px) 0; background: var(--pxl); }
+    .cta-box {
+      background: var(--p); border-radius: 14px;
+      padding: clamp(36px, 5vw, 60px); text-align: center;
+      margin-bottom: clamp(48px, 6vh, 72px);
+    }
+    .cta-box-label {
+      font-family: 'Raleway', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 5px; text-transform: uppercase; color: var(--pl); margin-bottom: 18px;
+    }
+    .cta-box-q {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(19px, 2.5vw, 30px); font-weight: 800;
+      color: var(--w); line-height: 1.4; max-width: 620px; margin: 0 auto 14px;
+    }
+    .cta-box-note { font-size: 15px; color: var(--pl); }
+
+    .takeaway { display: flex; gap: 22px; align-items: flex-start; margin-bottom: 28px; }
+    .takeaway:last-child { margin-bottom: 0; }
+    .takeaway-num {
+      font-family: 'Raleway', sans-serif; font-weight: 900;
+      font-size: clamp(44px, 5.5vw, 68px);
+      color: var(--pl); line-height: 1; flex-shrink: 0; width: 60px;
+    }
+    .takeaway-title { font-family: 'Raleway', sans-serif; font-size: clamp(17px, 1.8vw, 21px); font-weight: 700; color: var(--p); margin-bottom: 6px; }
+    .takeaway-body { font-size: clamp(14px, 1.3vw, 16px); color: var(--muted); line-height: 1.7; }
+
+    /* ── CONNECT ── */
+    .connect {
+      background: var(--p);
+      padding: clamp(80px, 12vh, 130px) clamp(24px, 8vw, 140px);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .connect-bg {
+      position: absolute; right: -20px; bottom: -40px;
+      font-family: 'Raleway', sans-serif; font-weight: 900;
+      font-size: 280px; line-height: 1;
+      color: rgba(255,255,255,0.03); pointer-events: none; user-select: none;
+    }
+    .connect h2 {
+      font-family: 'Raleway', sans-serif; font-weight: 900;
+      font-size: clamp(38px, 5.5vw, 76px);
+      color: var(--w); line-height: 1.05; margin-bottom: 44px;
+    }
+    .connect-card {
+      display: inline-block;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px; padding: clamp(32px, 5vw, 56px) clamp(36px, 6vw, 72px);
+      max-width: 440px; position: relative; z-index: 1;
+    }
+    .qr-box {
+      width: 150px; height: 150px; background: rgba(255,255,255,0.15);
+      border-radius: 8px; margin: 0 auto 24px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: var(--pl);
+    }
+    .connect-name { font-family: 'Raleway', sans-serif; font-size: 21px; font-weight: 800; color: var(--w); margin-bottom: 10px; }
+    .connect-link { font-size: 15px; color: var(--pl); margin-bottom: 5px; }
+    .connect-note { font-size: 13px; color: rgba(255,255,255,0.3); font-style: italic; margin-top: 18px; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--dark); padding: 22px clamp(24px, 5vw, 80px);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 10px;
+    }
+    .footer-l { font-family: 'Raleway', sans-serif; font-size: 13px; color: rgba(255,255,255,0.35); }
+    .footer-r { font-size: 12px; color: rgba(255,255,255,0.25); }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal {
+      opacity: 0; transform: translateY(26px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal.d1 { transition-delay: 0.1s; }
+    .reveal.d2 { transition-delay: 0.2s; }
+    .reveal.d3 { transition-delay: 0.3s; }
+    .reveal.d4 { transition-delay: 0.4s; }
+    .reveal.d5 { transition-delay: 0.5s; }
+    .reveal.from-r { transform: translateX(28px); }
+    .reveal.from-r.visible { transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- ══ TOPNAV ══ -->
+<nav class="topnav" id="topnav">
+  <div class="topnav-logo">
+    <svg width="26" height="26" viewBox="0 0 38 38" fill="none">
+      <polygon points="19,1 37,19 19,37 1,19" stroke="#4E2A84" stroke-width="2.5"/>
+      <polygon points="19,8 30,19 19,30 8,19" fill="#4E2A84"/>
+    </svg>
+    <span class="brand">CXPA<sup>™</sup></span>
+  </div>
+  <div class="topnav-event">CX <span class="accent">Leaders</span> Advance · April 27–29, 2026 · Toronto</div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-deco" aria-hidden="true">
+    <svg width="560" height="700" viewBox="0 0 320 430" fill="none">
+      <defs>
+        <linearGradient id="gv" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C5B3E6"/><stop offset="100%" stop-color="#4E2A84"/></linearGradient>
+        <linearGradient id="gh" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#9070C0" stop-opacity="0.7"/><stop offset="100%" stop-color="#4E2A84" stop-opacity="0.9"/></linearGradient>
+      </defs>
+      <rect x="120" y="-30" width="80" height="490" rx="6" fill="url(#gv)" transform="rotate(45 160 215)"/>
+      <rect x="120" y="-30" width="80" height="490" rx="6" fill="url(#gh)" transform="rotate(-45 160 215)" opacity="0.75"/>
+    </svg>
+  </div>
+  <div class="hero-right-bar"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow reveal">CX Leaders Advance 2026 · Session Report</div>
+      <h1 class="reveal d1">Navigating the<br><em>GenAI Paradox</em></h1>
+      <p class="hero-sub reveal d2">Balancing Time-to-Value with Trust &amp; Compliance</p>
+      <div class="hero-divider reveal d3"></div>
+      <p class="hero-intro reveal d3">Every CX leader right now is caught between two forces: the board pushing for GenAI yesterday, and the compliance team asking what happens when it goes wrong. That tension — between moving fast enough to matter and carefully enough to stay out of the headlines — is the GenAI Paradox. The framework cuts through it: a scoring matrix that gives your team a shared language to move fast where it's safe, and stop — with data, not instinct — where it isn't.</p>
+      <div class="hero-divider reveal d4"></div>
+      <p class="hero-speaker reveal d4">Akos Tolnai, CCXP</p>
+      <p class="hero-event reveal d5">60-minute breakout &nbsp;·&nbsp; CX Leaders Advance 2026 &nbsp;·&nbsp; Toronto, CA &nbsp;·&nbsp; April 28–29</p>
+      <p class="hero-event reveal d5" style="margin-top:3px;font-size:13px;color:var(--pm);">Based on original consumer research: <strong style="color:var(--dark);">104 responses</strong> · Canada &amp; US · Feb–Mar 2026</p>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll to read the full story</div>
+</section>
+
+
+<!-- ══ ACT 1 ══ -->
+<section class="act-banner">
+  <div class="act-banner-num" aria-hidden="true">01</div>
+  <div class="act-label reveal">Act 1 · The Pressure Is Real</div>
+  <h2 class="reveal d1">The Race<br>Is On.</h2>
+  <p class="act-sub reveal d2">The pressure to deploy GenAI is no longer a suggestion. It's a mandate. But before we get to the framework — let me tell you what the data said. Because it changed the story entirely.</p>
+</section>
+
+<!-- SECTION: Hypothesis -->
+<section class="section">
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <span class="section-label reveal">The Starting Premise</span>
+        <h3 class="reveal d1">Your CEO isn't asking.<br>They're telling.</h3>
+        <p class="prose reveal d2">Let's be honest. Your CEO, your board, your competitors — everyone is telling you to implement GenAI, and to do it yesterday. This isn't a technology conversation anymore. It's a strategic mandate with a deadline.</p>
+        <p class="prose reveal d3">And the reason is simple: the world your customers live in has fundamentally changed. They carry powerful AI in their pocket. They use it every day — to summarise documents, answer complex questions, plan travel in seconds. And they're starting to wonder why your support channel doesn't feel anything like it.</p>
+        <p class="prose reveal d4">Before building any framework, I wanted to understand what customers <em>actually</em> think. So I ran a survey — <strong>104 responses</strong>, Canada and the US, skewing toward educated, connected, professional consumers. The kind of customers many of you serve. I went in with a clear hypothesis. The data told me I was wrong.</p>
+        <div class="survey-note reveal d5">
+          <strong>Survey sample:</strong> n=104 · Canada 54%, US 37% · Ages 35–54: 73% · Bachelor's or higher: 85% · AI Adopters (daily/weekly): 72% of sample
+        </div>
+      </div>
+      <div class="reveal d2 from-r">
+        <div class="hypothesis-visual">
+          <div class="hyp-label">Our Hypothesis Going In</div>
+          <div class="hyp-scale">
+            <div class="hyp-item">
+              <span class="hyp-emoji">⚡</span>
+              <div class="hyp-name o">Speed</div>
+              <div class="hyp-desc">"Good enough"</div>
+              <div class="hyp-badge">WINNING ↑</div>
+            </div>
+            <div class="hyp-scale-icon">⚖</div>
+            <div class="hyp-item faded">
+              <span class="hyp-emoji">🎯</span>
+              <div class="hyp-name p">Accuracy</div>
+              <div class="hyp-desc">"Perfect, but wait"</div>
+            </div>
+          </div>
+          <p class="hyp-note">Daily AI use had rewired customers to accept<br>"80% good, right now" — or so we assumed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: Data reveal -->
+<section class="section" style="background:var(--pxl);padding-top:clamp(72px,10vh,110px);">
+  <div class="container">
+    <span class="section-label reveal">Survey Finding · n=104</span>
+    <h3 class="reveal d1">The data pushed back.<br><em>Hard.</em></h3>
+    <p class="prose reveal d2" style="max-width:680px;margin-bottom:clamp(36px,5vh,56px);">We asked: <em>"When you need support from a company, which matters more — speed with a good-enough answer, or accuracy even if you have to wait?"</em> We expected the AI-savvy crowd to choose speed. They didn't.</p>
+    <div class="two-col">
+      <div>
+        <div class="table-wrap reveal d2">
+          <table class="data-table">
+            <thead><tr><th>Group</th><th>Accuracy</th><th>Speed</th><th>Don't Know</th></tr></thead>
+            <tbody>
+              <tr><td>All respondents (n=104)</td><td><strong>78%</strong></td><td>19%</td><td>3%</td></tr>
+              <tr class="hl"><td>AI Adopters — daily/weekly (n=75)</td><td><strong>72%</strong></td><td>27%</td><td>1%</td></tr>
+              <tr><td>Traditional users — rarely/never (n=27)</td><td><strong>93%</strong></td><td><span class="zero">0%</span></td><td>7%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="insight reveal d3">
+          <p>The bar hasn't been lowered — it's been raised. Customers haven't been rewired to accept less. They've been shown what's possible by the AI in their pocket, and now they want more. That changes everything about the pressure we're navigating.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="stat-block purple reveal d2">
+          <span class="stat-num p" data-count="78">0%</span>
+          <div class="stat-label">chose <strong>Accuracy</strong> — even the most AI-savvy respondents in the sample</div>
+        </div>
+        <div class="stat-block orange reveal d3">
+          <span class="stat-num o">0%</span>
+          <div class="stat-label">of Traditional Users chose Speed.<br><strong>Not a single person.</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ ACT 2 ══ -->
+<section class="act-banner">
+  <div class="act-banner-num" aria-hidden="true">02</div>
+  <div class="act-label reveal">Act 2 · The Real Paradox</div>
+  <h2 class="reveal d1">The bar hasn't<br>been lowered.<br><span class="accent">It's been raised.</span></h2>
+  <p class="act-sub reveal d2">Customers don't want fast <em>or</em> accurate. They've experienced what truly good AI feels like — and now they want both, simultaneously. The old forced choice is gone forever.</p>
+</section>
+
+<!-- SECTION: New Standard -->
+<section class="section">
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <span class="section-label reveal">The New Standard</span>
+        <h3 class="reveal d1">Fast AND accurate.<br><em>Not one or the other.</em></h3>
+        <p class="prose reveal d2">Here's what the data is really telling us. Customers haven't lowered their accuracy standards. But they have been shown — by the AI in their pocket — that speed is no longer a trade-off. You can have both. And now they expect that from you.</p>
+        <p class="prose reveal d3">The old forced choice is gone. They don't want fast <em>or</em> accurate. They want fast <em>and</em> accurate. If you can't deliver that, they are done with you — and they have an alternative that will.</p>
+        <p class="prose reveal d4">The "dumb bot" isn't just unhelpful anymore. In a world where ChatGPT gives a thoughtful, contextual answer in two seconds, a menu of scripted options is an insult to your customer's intelligence.</p>
+        <div class="stat-pair reveal d5" style="margin-top:28px;">
+          <div class="stat-block orange">
+            <span class="stat-num o" style="font-size:clamp(44px,6.5vw,80px);" data-count="83">0%</span>
+            <div class="stat-label">frustrated or infuriated<br>by scripted chatbots</div>
+          </div>
+          <div class="stat-block grey">
+            <span class="stat-num gr" style="font-size:clamp(44px,6.5vw,80px);">2%</span>
+            <div class="stat-label">find them efficient<br>and easy</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal d2 from-r">
+        <p style="font-size:13px;color:var(--muted);font-style:italic;margin-bottom:18px;">"How do you feel about support chatbots that can only offer a menu of options?" (n=104)</p>
+        <div class="bar-chart">
+          <div class="bar-row">
+            <div class="bar-label">Infuriating — waste of time</div>
+            <div class="bar-track"><div class="bar-fill o" data-width="46"><span class="bar-val">46%</span></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">Frustrating — look for workaround</div>
+            <div class="bar-track"><div class="bar-fill p" data-width="37"><span class="bar-val">37%</span></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">Acceptable for simple problems</div>
+            <div class="bar-track"><div class="bar-fill pm" data-width="13"><span class="bar-val">13%</span></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">Efficient and easy</div>
+            <div class="bar-track"><div class="bar-fill gr" data-width="2" style="min-width:42px;"><span class="bar-val">2%</span></div></div>
+          </div>
+        </div>
+        <div class="insight orange" style="margin-top:24px;">
+          <p><strong>94% of AI Adopters</strong> already use personal AI to research their problem <em>before</em> contacting support. They're not waiting for your bot — they're bypassing it entirely.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PULL QUOTE -->
+<section class="pullquote">
+  <div class="pullquote-deco" aria-hidden="true">"</div>
+  <div style="position:relative;z-index:1;max-width:1100px;margin:0 auto;">
+    <p class="pullquote-text reveal">"I am never interacting with an automated system on purpose. Every time this happens it's because I have exhausted every other option. Every second with a chatbot is a waste of my time."</p>
+    <p class="pullquote-attr reveal d1">— Survey respondent &nbsp;·&nbsp; Rarely uses AI &nbsp;·&nbsp; Age 25–34 &nbsp;·&nbsp; United States</p>
+    <div class="pullquote-context reveal d2">
+      <p>Notice who said this: someone who <em>rarely</em> uses AI themselves. This isn't a tech-savvy early adopter demanding a better interface. This is someone who has already tried the FAQ, tried Google, and is asking you for help as a last resort. A menu of options feels like a door slammed in their face.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ ACT 3 ══ -->
+<section class="act-banner">
+  <div class="act-banner-num" aria-hidden="true">03</div>
+  <div class="act-label reveal">Act 3 · The Terror of Getting It Wrong</div>
+  <h2 class="reveal d1">"How do we do this<br>without ending up<br><span class="accent">on the news?"</span></h2>
+  <div class="act-pills reveal d2">
+    <div class="act-pill"><span class="act-pill-icon">⚠️</span><span class="act-pill-label">Loss of Control</span></div>
+    <div class="act-pill"><span class="act-pill-icon">📰</span><span class="act-pill-label">Brand &amp; Reputation Damage</span></div>
+    <div class="act-pill"><span class="act-pill-icon">⚖️</span><span class="act-pill-label">Regulatory &amp; Legal Exposure</span></div>
+  </div>
+</section>
+
+<!-- SECTION: Terror + Trust Gap -->
+<section class="section">
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <span class="section-label reveal">The Leader's Dilemma</span>
+        <h3 class="reveal d1">Accountable for a black box<br>we can't fully explain.</h3>
+        <p class="prose reveal d2">We know we have to act. But here's what every CX leader is quietly terrified of. GenAI can hallucinate. It can go off-brand. In a regulated industry, a wrong answer from your AI support agent isn't just a bad customer experience — it's a liability your legal team will be managing for months.</p>
+        <p class="prose reveal d3">The hardest part? Your CEO is asking you to be accountable for the outputs of a technology that not even the people who built it can fully explain. That's not a technology problem — it's a governance problem. And it lands in your inbox.</p>
+        <p class="prose reveal d4">Our survey gave us a precise picture of where trust breaks down with customers — and the data is important for anyone building an internal business case.</p>
+        <div class="insight reveal d5">
+          <p>Customers who love AI personally apply a much stricter standard when a company is handling their problem. Personal AI use does not equal institutional trust in AI.</p>
+        </div>
+      </div>
+      <div>
+        <span class="section-label reveal">Survey Finding · AI Adopters only · n=75</span>
+        <p style="font-size:13px;color:var(--muted);font-style:italic;margin-bottom:18px;" class="reveal d1">"Would you use a new AI support agent that might occasionally give incorrect information?"</p>
+        <div class="trust-row reveal d2">
+          <div class="stat-block green" style="padding:16px 10px;">
+            <div class="trust-num g" data-count="55">0%</div>
+            <div class="trust-lbl g">Yes —<br>willing to try</div>
+          </div>
+          <div class="stat-block red" style="padding:16px 10px;">
+            <div class="trust-num r" data-count="29">0%</div>
+            <div class="trust-lbl r">No —<br>want a human</div>
+          </div>
+          <div class="stat-block grey" style="padding:16px 10px;">
+            <div class="trust-num gr" data-count="16">0%</div>
+            <div class="trust-lbl gr">Don't<br>know</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--muted);font-style:italic;margin-bottom:14px;" class="reveal d3">Among those who said Yes — <strong>why?</strong></p>
+        <div class="bar-chart reveal d3">
+          <div class="bar-row">
+            <div class="bar-label">"Curious to see how it performs"</div>
+            <div class="bar-track"><div class="bar-fill o" data-width="41"><span class="bar-val">41%</span></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">"I can spot a bad answer"</div>
+            <div class="bar-track"><div class="bar-fill p" data-width="22"><span class="bar-val">22%</span></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">"Waiting is worse than the risk"</div>
+            <div class="bar-track"><div class="bar-fill pm" data-width="12"><span class="bar-val">12%</span></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">"Speed is my top priority"</div>
+            <div class="bar-track"><div class="bar-fill gr" data-width="7" style="min-width:40px;"><span class="bar-val">7%</span></div></div>
+          </div>
+        </div>
+        <div class="insight orange reveal d4">
+          <p><strong style="color:var(--o);">41% said curiosity — not speed, not trust.</strong> That's not adoption. That's a trial run. They're evaluating you. One bad answer doesn't just end the session — it ends the relationship.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ ACT 4 ══ -->
+<section class="act-banner">
+  <div class="act-banner-num" aria-hidden="true">04</div>
+  <div class="act-label reveal">Act 4 · The Navigator's Framework</div>
+  <h2 class="reveal d1">A tool to decide<br>what to build —<br><span class="accent">and what to kill.</span></h2>
+  <p class="act-sub reveal d2">The CX GenAI Prioritization Matrix. Two axes: potential CX impact, and customer-centric risk. Score before you plot. Plot before you build.</p>
+</section>
+
+<!-- SECTION: Scorecard -->
+<section class="section">
+  <div class="container">
+    <span class="section-label reveal">Step 1 · Before You Plot Anything</span>
+    <h3 class="reveal d1">Score the risk honestly.<br><em>Don't guess it.</em></h3>
+    <p class="prose reveal d2" style="max-width:700px;margin-bottom:clamp(36px,5vh,52px);">Our survey shows the risk is almost always higher than CX leaders assume. Even customers who love AI personally apply a much stricter standard when a company is handling their problem. Before any idea lands on the matrix, run it through this three-factor scorecard.</p>
+    <div class="two-col">
+      <div class="reveal d2">
+        <div class="scorecard">
+          <div class="scorecard-title">Risk Scorecard · 3 Factors</div>
+          <div class="score-item">
+            <div class="score-num">01</div>
+            <div>
+              <div class="score-q">What is the customer's emotional state?</div>
+              <div class="score-hint">High-stakes issue (billing, health, travel disruption) vs. low-stakes (FAQ, order status). Emotionally elevated customers need human-grade accuracy.</div>
+            </div>
+          </div>
+          <div class="score-item">
+            <div class="score-num">02</div>
+            <div>
+              <div class="score-q">What is your audience's AI tolerance?</div>
+              <div class="score-hint">Our data: 29% of even daily AI users would flatly refuse an imperfect AI agent. Know your segment before assuming openness to automation.</div>
+            </div>
+          </div>
+          <div class="score-item">
+            <div class="score-num">03</div>
+            <div>
+              <div class="score-q">What is your compliance burden?</div>
+              <div class="score-hint">Finance, healthcare, government = high scrutiny. A wrong AI answer in a regulated context isn't a service failure — it's a legal one.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal d3 from-r">
+        <h3 style="font-size:clamp(20px,2.4vw,28px);margin-bottom:18px;">Why the scorecard comes first</h3>
+        <p class="prose">The instinct is to plot ideas directly on the matrix. Resist it. The scorecard forces an honest conversation with your team — and often surfaces assumptions you didn't know you were making.</p>
+        <p class="prose">Our data showed <strong>29% of the most AI-savvy customers</strong> would still refuse an imperfect AI agent outright. In most enterprise customer bases, that number is likely higher. You need to know your number before you ship anything.</p>
+        <p class="prose">The scorecard also gives you language for the conversation with legal, compliance, and executive stakeholders: not "we want to build an AI agent," but "we've scored this against three risk dimensions — and here is where it lands."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MATRIX SECTION -->
+<section class="matrix-section">
+  <div class="container">
+    <div class="matrix-header">
+      <span class="section-label reveal">Step 2 · The Prioritization Matrix</span>
+      <h3 class="reveal d1">Plot &amp; Decide</h3>
+      <p class="reveal d2">Once you've scored the risk, every GenAI initiative lands somewhere on this grid. The quadrant tells you the right posture — and gives you a shared language to prioritise, sequence, and kill ideas.</p>
+    </div>
+    <div id="matrix" class="matrix-wrap">
+      <div class="matrix-y"><span>CX Impact →</span></div>
+      <div class="mcell g" data-delay="0" style="grid-row:1;grid-column:2;">
+        <div><h4>🟢 Quick Wins</h4><div class="mcell-mantra" style="color:var(--green);">Just Do It</div></div>
+        <div class="mcell-eg">High impact, low risk. Build momentum and prove ROI here first.<br><em>e.g. AI summarising case notes for agents</em></div>
+      </div>
+      <div class="mcell a" data-delay="150" style="grid-row:1;grid-column:3;">
+        <div><h4>🟡 Strategic Bets</h4><div class="mcell-mantra" style="color:var(--amber);">Plan Carefully</div></div>
+        <div class="mcell-eg">High impact, high risk. Needs executive air cover, pilots, and guardrails.<br><em>e.g. Fully autonomous customer journey agent</em></div>
+      </div>
+      <div class="mcell gr" data-delay="300" style="grid-row:2;grid-column:2;">
+        <div><h4>⬜ Incremental Gains</h4><div class="mcell-mantra" style="color:var(--grey);">Automate &amp; Delegate</div></div>
+        <div class="mcell-eg">Low impact, low risk. Good for ops efficiency. Don't oversell internally.<br><em>e.g. AI-powered ticket categorisation</em></div>
+      </div>
+      <div class="mcell r" data-delay="450" style="grid-row:2;grid-column:3;">
+        <div><h4>🔴 Danger Zone</h4><div class="mcell-mantra" style="color:var(--red);">Avoid At All Costs</div></div>
+        <div class="mcell-eg">Low impact, high risk. The hardest no to say — but the most important one.<br><em>e.g. GenAI writing public apologies for outages</em></div>
+      </div>
+      <div class="matrix-x">
+        <span>← Low Risk</span>
+        <span class="mid">Audience Tolerance &amp; Compliance Risk</span>
+        <span>High Risk →</span>
+      </div>
+    </div>
+    <div class="insight" style="margin-top:28px;">
+      <p>The Danger Zone is where the hardest conversations happen. High risk, low reward — but often where the most exciting-sounding ideas land. This framework lets you say no with data, not just instinct.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ ACT 5 ══ -->
+<section class="act-banner">
+  <div class="act-banner-num" aria-hidden="true">05</div>
+  <div class="act-label reveal">Act 5 · Strategy &amp; Call to Action</div>
+  <h2 class="reveal d1">For high-risk worlds:<br><span class="accent">enable customer-led AI.</span></h2>
+  <p class="act-sub reveal d2">Don't deploy the risk — provide the trusted source material. 94% of AI Adopters are already doing this with or without you.</p>
+</section>
+
+<!-- SECTION: Customer-Led AI -->
+<section class="section">
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <span class="section-label reveal">Smart Strategy for High-Risk Worlds</span>
+        <h3 class="reveal d1">Your knowledge base<br>becomes the competitive moat.</h3>
+        <p class="prose reveal d2">For anyone in a regulated industry where the Strategic Bet quadrant is too risky to move on quickly, here is your near-term play. Don't deploy the risk — provide the trusted source material.</p>
+        <p class="prose reveal d3">Instead of building a risky internal AI, build your knowledge base so structured, accurate, and accessible that customers can use <strong>their own AI</strong> to self-serve from your trusted content. You provide the source. They bring the model. You get the benefit of AI self-service with a fraction of the compliance exposure.</p>
+        <p class="prose reveal d4">Your compliance team can get behind this. Your content team can execute it. And your customers — the ones already using AI daily — will reward you for being the most useful source they can point their tools at.</p>
+        <div class="stat-block purple reveal d5" style="text-align:center;margin-top:28px;">
+          <span class="stat-num p" data-count="94">0%</span>
+          <div class="stat-label">of AI Adopters have already used personal AI to research their problem <em>before calling support.</em><br><strong>They're doing this with or without you.</strong></div>
+        </div>
+      </div>
+      <div class="reveal d2 from-r">
+        <div class="control-card green">
+          <div class="ctrl-header">✓ What you control</div>
+          <div class="ctrl-item">Accuracy of your source material</div>
+          <div class="ctrl-item">Structure, findability, and freshness</div>
+          <div class="ctrl-item">Your compliance risk profile</div>
+        </div>
+        <div class="control-card red">
+          <div class="ctrl-header">✕ What the customer handles</div>
+          <div class="ctrl-item">The AI model risk</div>
+          <div class="ctrl-item">Hallucination liability</div>
+          <div class="ctrl-item">Their trust relationship with their own AI</div>
+        </div>
+        <div class="insight" style="margin-top:0;">
+          <p>This isn't abdication — it's strategy. You become the authoritative source that AI tools reach for first. That's a defensible competitive position that compounds over time.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box reveal">
+      <div class="cta-box-label">Ask This on Monday Morning</div>
+      <div class="cta-box-q">"What is our official triage model for GenAI in our customer journey?"</div>
+      <div class="cta-box-note">If no one can answer it — you now have the framework to lead that conversation.</div>
+    </div>
+    <div>
+      <div class="takeaway reveal d1">
+        <div class="takeaway-num">1</div>
+        <div>
+          <div class="takeaway-title">The bar is higher than you thought</div>
+          <div class="takeaway-body">78% of consumers still prioritise accuracy. Customers want accurate <em>and</em> fast — simultaneously. Only GenAI can credibly promise both. That's exactly why this matters so much, and why the stakes are so high if you get it wrong.</div>
+        </div>
+      </div>
+      <div class="takeaway reveal d2">
+        <div class="takeaway-num">2</div>
+        <div>
+          <div class="takeaway-title">Willing adopters are on a trial run</div>
+          <div class="takeaway-body">41% said curiosity — not speed, not trust. They're evaluating you. Score the risk before you build anything customer-facing. One bad answer doesn't just end a session — it ends the relationship, and probably starts a review.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECT -->
+<section class="connect">
+  <div class="connect-bg" aria-hidden="true">→</div>
+  <h2 class="reveal">Navigate the<br>Paradox.</h2>
+  <div class="reveal d1">
+    <div class="connect-card">
+      <div class="qr-box">[QR Code]</div>
+      <div class="connect-name">Akos Tolnai, CCXP</div>
+      <div class="connect-link">[LinkedIn URL]</div>
+      <div class="connect-link">[Email or website]</div>
+      <div class="connect-note">— Scan to connect, download the framework, or book a 1-on-1 call —</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-l">CX Leaders Advance 2026 · Toronto, CA · April 27–29</div>
+  <div class="footer-r">© 2026 Akos Tolnai, CCXP</div>
+</footer>
+
+<script>
+  // ── Reveal on scroll ──
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  // ── Counter animation ──
+  function countUp(el) {
+    const target = parseFloat(el.dataset.count);
+    if (!target) return;
+    const dur = 1400, start = performance.now();
+    (function tick(now) {
+      const t = Math.min((now - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.round(ease * target) + '%';
+      if (t < 1) requestAnimationFrame(tick);
+    })(start);
+  }
+  const countObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { countUp(e.target); countObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
+
+  // ── Bar chart animation ──
+  const barObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.bar-fill[data-width]').forEach((bar, i) => {
+          setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, i * 110);
+        });
+        barObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.bar-chart').forEach(c => barObs.observe(c));
+
+  // ── Matrix quadrant reveal ──
+  const matrixEl = document.getElementById('matrix');
+  if (matrixEl) {
+    new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        matrixEl.querySelectorAll('.mcell').forEach(cell => {
+          setTimeout(() => cell.classList.add('visible'), parseInt(cell.dataset.delay) || 0);
+        });
+      }
+    }, { threshold: 0.2 }).observe(matrixEl);
+  }
+
+  // ── Topnav hide on scroll down ──
+  let lastY = 0;
+  const nav = document.getElementById('topnav');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    nav.style.transform = (y > lastY && y > 100) ? 'translateY(-100%)' : 'translateY(0)';
+    lastY = y;
+  }, { passive: true });
+</script>
+</body>
+</html>

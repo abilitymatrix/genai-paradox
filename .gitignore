@@ -1,0 +1,13 @@
+# Backups
+*.backup.html
+
+# Raw survey data
+*.csv
+
+# Template assets / reference images
+*.png
+2026\ CXLA\ Presentation\ Template\ 1/
+
+# Working docs (not part of the website)
+*.md
+.DS_Store
