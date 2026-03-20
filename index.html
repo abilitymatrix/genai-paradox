@@ -577,6 +577,8 @@
     .reveal.d5 { transition-delay: 0.5s; }
     .reveal.from-r { transform: translateX(28px); }
     .reveal.from-r.visible { transform: none; }
+    .right-offset { padding-top: clamp(80px,14vh,144px); }
+    @media (max-width:780px) { .right-offset { padding-top: 0; } }
 
     /* ── RISK CARDS (Act 3) ── */
     .risk-cards { display:flex; flex-direction:column; gap:10px; margin-top:32px; }
@@ -721,7 +723,7 @@
           <p><strong>Hypothesis:</strong> Daily AI use had rewired customers to prefer speed. "80% right, right now" would beat "100% right, eventually."</p>
         </div>
       </div>
-      <div class="reveal d2 from-r">
+      <div class="reveal d2 from-r right-offset">
         <div class="hypothesis-visual">
           <div class="hyp-label">Our Hypothesis Going In</div>
           <div class="hyp-scale">
@@ -860,7 +862,7 @@
           </div>
         </div>
       </div>
-      <div class="reveal d2 from-r">
+      <div class="reveal d2 from-r right-offset">
         <p style="font-size:13px;color:var(--muted);font-style:italic;margin-bottom:18px;">"How do you feel about support chatbots that can only offer a menu of options?" (n=104)</p>
         <div class="bar-chart">
           <div class="bar-row">
@@ -1060,7 +1062,7 @@
           </div>
         </div>
       </div>
-      <div class="reveal d3 from-r">
+      <div class="reveal d3 from-r right-offset">
         <h3 style="font-size:clamp(20px,2.4vw,28px);margin-bottom:18px;">Why the scorecard comes first</h3>
         <p class="prose">The instinct is to plot ideas directly on the matrix. Resist it. The scorecard forces an honest conversation with your team and often surfaces assumptions you didn't know you were making.</p>
         <p class="prose">Our data showed <strong>29% of the most AI-savvy customers</strong> would still refuse an imperfect AI agent outright. In most enterprise customer bases, that number is likely higher. You need to know your number before you ship anything.</p>
