@@ -644,6 +644,7 @@
 
     /* ── TENSION VISUAL (Act 1 Mandate) ── */
     .tension-pair { display:flex; flex-direction:column; gap:10px; padding-top:clamp(80px,14vh,144px); }
+    @media (max-width:780px) { .tension-pair { padding-top:24px; } }
     .tension-card { border-radius:12px; padding:20px 22px; display:flex; gap:14px; align-items:flex-start; }
     .tension-card.push { background:#FFF3EE; border:2px solid var(--o); }
     .tension-card.hold { background:var(--pxl); border:2px solid var(--p); }
